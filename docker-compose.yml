@@ -1,0 +1,36 @@
+name: financo
+
+services:
+  dev:
+    image: ruby:3.2.2-bookworm
+    restart: always
+    environment:
+      DATABASE_USER: financo
+      DATABASE_PASSWORD: localdev
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    command: tail -f /dev/null
+    depends_on:
+      - db
+      - redis
+
+  db:
+    image: postgres:16.2-bookworm
+    restart: always
+    environment:
+      POSTGRES_USER: financo
+      POSTGRES_PASSWORD: localdev
+    volumes:
+      - financo-db:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7.2-bookworm
+    restart: always
+    volumes:
+      - financo-redis:/data
+
+volumes:
+  financo-db:
+  financo-redis:
