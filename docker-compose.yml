@@ -3,7 +3,6 @@ name: financo
 services:
   dev:
     image: ruby:3.2.2-bookworm
-    restart: always
     environment:
       DATABASE_USER: financo
       DATABASE_PASSWORD: localdev
@@ -12,6 +11,10 @@ services:
       REDIS_HOST: redis
       REDIS_PORT: 6379
     command: tail -f /dev/null
+    working_dir: /var/app
+    volumes:
+      - .:/var/app
+      - financo-dev-bundle:/usr/local/bundle
     depends_on:
       - db
       - redis
@@ -34,3 +37,4 @@ services:
 volumes:
   financo-db:
   financo-redis:
+  financo-dev-bundle:
