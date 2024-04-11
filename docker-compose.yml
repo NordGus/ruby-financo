@@ -25,6 +25,8 @@ services:
     environment:
       POSTGRES_USER: financo
       POSTGRES_PASSWORD: localdev
+    ports:
+      - 5432:5432
     volumes:
       - financo-db:/var/lib/postgresql/data
 
