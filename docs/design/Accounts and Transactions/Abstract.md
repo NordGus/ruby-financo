@@ -22,11 +22,11 @@ expense.
 | description | text      |                                                  |
 | color       | text      | not null                                         |
 | icon        | text      | not null                                         |
-| passive     | decimal   | not null, precision `15`, scale `2`, default `0` |
-| is_archived | boolean   | index, not null, default `false`                 |
+| capital     | decimal   | not null, precision `15`, scale `2`, default `0` |
+| archived_at | timestamp | index                                            |
+| deleted_at  | timestamp | index                                            |
 | created_at  | timestamp | not null                                         |
 | updated_at  | timestamp | not null                                         |
-| deleted_at  | timestamp | index                                            |
 
 An Account can have a parent account vía the `parent_id`.
 This is a design decision made, so the user can define child accounts,
@@ -77,19 +77,19 @@ deleted form the system, and it will be completely removed on later time.
 Transactions are time series-like records that connect money movements between
 [Accounts](#accounts).
 
-| field         | type      | additional                                |
-|---------------|-----------|-------------------------------------------|
-| id            | uuid      | primary key                               |
-| source_id     | uuid      | foreign key to accounts, index, not null  |
-| target_id     | uuid      | foreign key to accounts, index, not null  |
-| source_amount | integer   | not null                                  |
-| target_amount | integer   | not null                                  |
-| notes         | text      |                                           |
-| issued_at     | date      | index, not null                           |
-| executed_at   | date      | index                                     |
-| created_at    | timestamp | not null                                  |
-| updated_at    | timestamp | not null                                  |
-| deleted_at    | timestamp | index                                     |
+| field         | type      | additional                               |
+|---------------|-----------|------------------------------------------|
+| id            | uuid      | primary key                              |
+| source_id     | uuid      | foreign key to accounts, index, not null |
+| target_id     | uuid      | foreign key to accounts, index, not null |
+| source_amount | decimal   | not null, precision `15`, scale `2`      |
+| target_amount | decimal   | not null, precision `15`, scale `2`      |
+| notes         | text      |                                          |
+| issued_at     | date      | index, not null                          |
+| executed_at   | date      | index                                    |
+| deleted_at    | timestamp | index                                    |
+| created_at    | timestamp | not null                                 |
+| updated_at    | timestamp | not null                                 |
 
 All Transactions need to reference a *Source* Account and a *Target* Account,
 vía `source_id` and `target_id`.
