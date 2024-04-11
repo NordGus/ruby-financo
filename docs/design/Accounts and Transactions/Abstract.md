@@ -12,21 +12,21 @@ Accounts are containers that can represent a capital store or wallet in the
 system, debts held or incurred, available credit or any source of income or
 expense.
 
-| field       | type      | additional                           |
-|-------------|-----------|--------------------------------------|
-| id          | uuid      | primary key                          |
-| parent_id   | uuid      | index                                |
-| kind        | text      | index, not nullable                  |
-| currency    | text      | index, not nullable                  |
-| name        | text      | not nullable                         |
-| description | text      |                                      |
-| color       | text      | not nullable                         |
-| icon        | text      | not nullable                         |
-| limit       | integer   | not nullable, default `0`            |
-| is_archived | boolean   | index, not nullable, default `false` |
-| created_at  | timestamp | not nullable                         |
-| updated_at  | timestamp | not nullable                         |
-| deleted_at  | timestamp | index                                |
+| field       | type      | additional                                       |
+|-------------|-----------|--------------------------------------------------|
+| id          | uuid      | primary key                                      |
+| parent_id   | uuid      | index                                            |
+| kind        | text      | index, not null                                  |
+| currency    | text      | index, not null                                  |
+| name        | text      | not null                                         |
+| description | text      |                                                  |
+| color       | text      | not null                                         |
+| icon        | text      | not null                                         |
+| passive     | decimal   | not null, precision `15`, scale `2`, default `0` |
+| is_archived | boolean   | index, not null, default `false`                 |
+| created_at  | timestamp | not null                                         |
+| updated_at  | timestamp | not null                                         |
+| deleted_at  | timestamp | index                                            |
 
 An Account can have a parent account vía the `parent_id`.
 This is a design decision made, so the user can define child accounts,
@@ -59,7 +59,7 @@ This would indicate the system if the user should indicate the amount received
 by the target account to store as the transaction's exchange rate and maintain
 system coherency.
 
-Accounts must have a `limit`, this value will be used on `debt` family Accounts 
+Accounts must have a `passive`, this value will be used on `debt` family Accounts 
 to define the credit limit for `debt.credit` Accounts or the amount owed/own for
 `debt.loan` Accounts.
 For all other Accounts' `kind` this value should be `0` for normalization
@@ -77,19 +77,19 @@ deleted form the system, and it will be completely removed on later time.
 Transactions are time series-like records that connect money movements between
 [Accounts](#accounts).
 
-| field         | type      | additional                                   |
-|---------------|-----------|----------------------------------------------|
-| id            | uuid      | primary key                                  |
-| source_id     | uuid      | foreign key to accounts, index, not nullable |
-| target_id     | uuid      | foreign key to accounts, index, not nullable |
-| source_amount | integer   | not nullable                                 |
-| target_amount | integer   | not nullable                                 |
-| notes         | text      |                                              |
-| issued_at     | date      | index, not nullable                          |
-| executed_at   | date      | index                                        |
-| created_at    | timestamp | not nullable                                 |
-| updated_at    | timestamp | not nullable                                 |
-| deleted_at    | timestamp | index                                        |
+| field         | type      | additional                                |
+|---------------|-----------|-------------------------------------------|
+| id            | uuid      | primary key                               |
+| source_id     | uuid      | foreign key to accounts, index, not null  |
+| target_id     | uuid      | foreign key to accounts, index, not null  |
+| source_amount | integer   | not null                                  |
+| target_amount | integer   | not null                                  |
+| notes         | text      |                                           |
+| issued_at     | date      | index, not null                           |
+| executed_at   | date      | index                                     |
+| created_at    | timestamp | not null                                  |
+| updated_at    | timestamp | not null                                  |
+| deleted_at    | timestamp | index                                     |
 
 All Transactions need to reference a *Source* Account and a *Target* Account,
 vía `source_id` and `target_id`.
