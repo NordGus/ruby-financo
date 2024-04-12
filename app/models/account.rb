@@ -1,13 +1,25 @@
 # frozen_string_literal: true
 
 class Account < ApplicationRecord
-  SYSTEM_KINDS = %w[system.history].freeze
-  CAPITAL_KINDS = %w[capital.normal capital.savings].freeze
-  DEBT_KINDS = %w[debt.loan debt.credit].freeze
-  EXTERNAL_KINDS = %w[external.income external.expense].freeze
-  KINDS = (SYSTEM_KINDS + CAPITAL_KINDS + DEBT_KINDS + EXTERNAL_KINDS).freeze
+  KINDS = {
+    system: {
+      history: 'system.history'
+    }.freeze,
+    capital: {
+      normal: 'capital.normal',
+      savings: 'capital.savings'
+    }.freeze,
+    external: {
+      income: 'external.income',
+      external: 'external.debt'
+    }.freeze
+  }.freeze
 
-  CURRENCIES = %w[USD GBP EUR].freeze
+  CURRENCIES = {
+    USD: 'USD',
+    GBP: 'GBP',
+    EUR: 'EUR'
+  }.freeze
 
   NAME_MIN_LENGTH = 3
   NAME_MAX_LENGTH = 120
@@ -15,10 +27,9 @@ class Account < ApplicationRecord
   belongs_to :parent, class_name: 'Account', foreign_key: 'parent_id', optional: true
   has_many :children, class_name: 'Account', foreign_key: 'parent_id', dependent: :destroy
 
-  validates :kind, presence: true, inclusion: { in: KINDS }
-  validates :currency, presence: true, inclusion: { in: CURRENCIES }
-  validates :name, presence: true
-  validates :name, length: { minimum: NAME_MIN_LENGTH, maximum: NAME_MAX_LENGTH }
+  validates :kind, presence: true, inclusion: { in: KINDS.values.map(&:values).flatten.compact }
+  validates :currency, presence: true, inclusion: { in: CURRENCIES.values }
+  validates :name, presence: true, length: { minimum: NAME_MIN_LENGTH, maximum: NAME_MAX_LENGTH }
   validates :color, presence: true
   validates :icon, presence: true
   validates :capital, presence: true
