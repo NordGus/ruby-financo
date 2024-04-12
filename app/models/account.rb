@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 class Account < ApplicationRecord
+  include Customizable::Colorable
+  include Customizable::Iconazable
+
   KINDS = {
     system: {
       history: 'system.history'
@@ -30,8 +33,6 @@ class Account < ApplicationRecord
   validates :kind, presence: true, inclusion: { in: KINDS.values.map(&:values).flatten.compact }
   validates :currency, presence: true, inclusion: { in: CURRENCIES.values }
   validates :name, presence: true, length: { minimum: NAME_MIN_LENGTH, maximum: NAME_MAX_LENGTH }
-  validates :color, presence: true
-  validates :icon, presence: true
   validates :capital, presence: true
 
   default_scope -> { where(deleted_at: nil) }
