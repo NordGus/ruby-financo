@@ -166,10 +166,14 @@ module Customizable
       validates :color, presence: true, inclusion: { in: color_options }
     end
 
-    def color_options
-      COLORS.map do |color, groups|
-        groups.keys.map { |group| "#{color}.#{group}" }
-      end.flatten.compact
+    module ClassMethods
+      protected
+
+      def color_options
+        COLORS.map do |color, groups|
+          groups.keys.map { |group| "#{color}.#{group}" }
+        end.flatten.compact
+      end
     end
   end
   # rubocop:enable Metrics/ModuleLength
