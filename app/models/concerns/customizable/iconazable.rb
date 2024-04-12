@@ -5,6 +5,7 @@ module Customizable
   module Iconazable
     extend ActiveSupport::Concern
 
+    # TODO(#1): search and list icon theme
     ICONS = {
       bank: 'icon-bank'
     }.freeze
