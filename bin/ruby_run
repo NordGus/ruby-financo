@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+# This is a utility script use as a shortcut to run commands on the development container
+
+# shellcheck disable=SC2068
+docker compose exec -it dev $@
