@@ -9,6 +9,10 @@ Metrics/MethodLength:
 Metrics/BlockLength:
   Exclude:
     - config/environments/*
+    - db/schema.rb
 
 Style/Documentation:
     Enabled: false
+
+Style/StringLiterals:
+    EnforcedStyle: double_quotes
