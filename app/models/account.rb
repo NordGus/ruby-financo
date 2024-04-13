@@ -32,6 +32,7 @@ class Account < ApplicationRecord
   has_many :withdrawals, class_name: 'Transaction', foreign_key: 'source_id', dependent: :destroy
   has_many :deposits, class_name: 'Transaction', foreign_key: 'target_id', dependent: :destroy
 
+  validates :parent_id, comparison: { other_than: :id }, if: -> { parent_id.present? }
   validates :kind, presence: true, inclusion: { in: KINDS.values.map(&:values).flatten.compact }
   validates :currency, presence: true, inclusion: { in: CURRENCIES.values }
   validates :name, presence: true, length: { minimum: NAME_MIN_LENGTH, maximum: NAME_MAX_LENGTH }
