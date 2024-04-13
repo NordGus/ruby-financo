@@ -1,7 +1,17 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  id: 
+  kind: MyString
+  currency: MyText
+  name: MyString
+  description: MyText
+  color: MyString
+  icon: MyString
+  capital: 9.99
+  archived_at: nil
+  deleted_at: nil
+
+two:
   parent: one
   kind: MyString
   currency: MyText
@@ -11,17 +21,4 @@ one:
   icon: MyString
   capital: 9.99
   archived_at: nil
-  deleted_at: 2024-04-11 19:21:42
-
-two:
-  id: 
-  parent: two
-  kind: MyString
-  currency: MyText
-  name: MyString
-  description: MyText
-  color: MyString
-  icon: MyString
-  capital: 9.99
-  is_archived: nil
-  deleted_at: 2024-04-11 19:21:42
+  deleted_at: nil

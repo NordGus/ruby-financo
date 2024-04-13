@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_11_192142) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_12_224229) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -34,4 +34,24 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_11_192142) do
     t.index ["parent_id"], name: "index_account_parent"
   end
 
+  create_table "transactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "source_id", null: false
+    t.uuid "target_id", null: false
+    t.decimal "source_amount", precision: 15, scale: 2, default: "0.0", null: false
+    t.decimal "target_amount", precision: 15, scale: 2, default: "0.0", null: false
+    t.text "notes"
+    t.date "issued_at", null: false
+    t.date "executed_at"
+    t.datetime "deleted_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["deleted_at"], name: "index_transaction_deleted"
+    t.index ["executed_at"], name: "index_transaction_executed"
+    t.index ["issued_at"], name: "index_transaction_issued"
+    t.index ["source_id"], name: "transaction_source_account_reference"
+    t.index ["target_id"], name: "transaction_target_account_reference"
+  end
+
+  add_foreign_key "transactions", "accounts", column: "source_id", name: "transaction_source_account_reference"
+  add_foreign_key "transactions", "accounts", column: "target_id", name: "transaction_target_account_reference"
 end
