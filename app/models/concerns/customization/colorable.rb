@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Customizable
+module Customization
   # rubocop:disable Metrics/ModuleLength
   module Colorable
     extend ActiveSupport::Concern

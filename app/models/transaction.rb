@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Transaction < ApplicationRecord
-  belongs_to :source, class_name: 'Account', foreign_key: 'source_id'
-  belongs_to :target, class_name: 'Account', foreign_key: 'target_id'
+  belongs_to :source, class_name: "Account", foreign_key: "source_id", inverse_of: :withdrawals
+  belongs_to :target, class_name: "Account", foreign_key: "target_id", inverse_of: :deposits
 
   validates :target, comparison: { other_than: :source }
   validates :source_amount, presence: true
@@ -12,12 +12,14 @@ class Transaction < ApplicationRecord
   validates :executed_at, comparison: { greater_than_or_equal_to: :issued_at },
                           if: -> { executed_at.present? }
 
+  default_scope -> { where(deleted_at: nil) }
+
   private
 
   def amounts_negativity_or_positivity_match
     return if source_amount.negative? == target_amount.negative?
 
-    errors.add(:source_amount, :amount_mismatch, message: 'positivity/negativity mismatch')
-    errors.add(:target_amount, :amount_mismatch, message: 'positivity/negativity mismatch')
+    errors.add(:source_amount, :amount_mismatch, message: "positivity/negativity mismatch")
+    errors.add(:target_amount, :amount_mismatch, message: "positivity/negativity mismatch")
   end
 end

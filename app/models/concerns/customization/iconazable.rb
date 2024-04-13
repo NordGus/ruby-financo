@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Customizable
+module Customization
   module Iconazable
     extend ActiveSupport::Concern
 
