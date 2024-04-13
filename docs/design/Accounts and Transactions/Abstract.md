@@ -107,7 +107,8 @@ Every Transaction must have an `issued_at` date, this date represents the date t
 Transaction was issued from the *Source* Account, ergo when the money left. At the same time it also 
 have a `executed_at` date, this date represents the date that the Transaction was executed by 
 the *Target* Account's institution, ergo when the money arrived. The difference between 
-`issued_at` and `executed_at` represents the lag/fly time of the Transaction.
+`issued_at` and `executed_at` represents the lag/fly time of the Transaction. `executed_at` must 
+be greater than or equal to `issued_at` when set.
 
 For deletion, each Account can have a timestamp `deleted_at` to indicate it was deleted form the 
 system, and it will be completely removed on later time.
