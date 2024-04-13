@@ -29,6 +29,8 @@ class Account < ApplicationRecord
 
   belongs_to :parent, class_name: 'Account', foreign_key: 'parent_id', optional: true
   has_many :children, class_name: 'Account', foreign_key: 'parent_id', dependent: :destroy
+  has_many :withdrawals, class_name: 'Transaction', foreign_key: 'source_id', dependent: :destroy
+  has_many :deposits, class_name: 'Transaction', foreign_key: 'target_id', dependent: :destroy
 
   validates :kind, presence: true, inclusion: { in: KINDS.values.map(&:values).flatten.compact }
   validates :currency, presence: true, inclusion: { in: CURRENCIES.values }
