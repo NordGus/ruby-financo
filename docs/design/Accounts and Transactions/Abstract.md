@@ -41,6 +41,7 @@ As for the types, each family would have their own:
   - `normal`
   - `savings`
 - `debt`
+  - `personal`
   - `loan`
   - `credit`
 - `external`
