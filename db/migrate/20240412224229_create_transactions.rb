@@ -20,8 +20,8 @@ class CreateTransactions < ActiveRecord::Migration[7.1]
                    },
                    index: { name: :transaction_target_account_reference },
                    type: :uuid
-      t.decimal :source_amount, precision: 15, scale: 2, null: false, default: 0
-      t.decimal :target_amount, precision: 15, scale: 2, null: false, default: 0
+      t.bigint :source_amount, null: false, default: 0
+      t.bigint :target_amount, null: false, default: 0
       t.text :notes
       t.date :issued_at, null: false, index: { name: :index_transaction_issued }
       t.date :executed_at, index: { name: :index_transaction_executed }

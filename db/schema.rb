@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -12,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 20_240_412_224_229) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_12_224229) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -23,8 +21,7 @@ ActiveRecord::Schema[7.1].define(version: 20_240_412_224_229) do
     t.string "name", null: false
     t.text "description"
     t.string "color", null: false
-    t.string "icon", null: false
-    t.decimal "capital", precision: 15, scale: 2, default: "0.0", null: false
+    t.bigint "capital", default: 0, null: false
     t.datetime "archived_at"
     t.datetime "deleted_at"
     t.datetime "created_at", null: false
@@ -39,8 +36,8 @@ ActiveRecord::Schema[7.1].define(version: 20_240_412_224_229) do
   create_table "transactions", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.uuid "source_id", null: false
     t.uuid "target_id", null: false
-    t.decimal "source_amount", precision: 15, scale: 2, default: "0.0", null: false
-    t.decimal "target_amount", precision: 15, scale: 2, default: "0.0", null: false
+    t.bigint "source_amount", default: 0, null: false
+    t.bigint "target_amount", default: 0, null: false
     t.text "notes"
     t.date "issued_at", null: false
     t.date "executed_at"
