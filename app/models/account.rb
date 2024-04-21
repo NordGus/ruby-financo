@@ -18,7 +18,7 @@ class Account < ApplicationRecord
     }.freeze,
     external: {
       income: "external.income",
-      external: "external.debt"
+      expense: "external.expense"
     }.freeze
   }.freeze
 
@@ -47,5 +47,9 @@ class Account < ApplicationRecord
   validates :name, presence: true, length: { minimum: NAME_MIN_LENGTH, maximum: NAME_MAX_LENGTH }
   validates :capital, presence: true
 
-  default_scope -> { where(deleted_at: nil) }
+  default_scope -> { where(deleted_at: nil).order("archived_at DESC NULLS FIRST") }
+
+  def balance
+    credits.sum(:target_amount) - debits.sum(:source_amount)
+  end
 end
