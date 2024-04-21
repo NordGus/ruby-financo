@@ -70,6 +70,7 @@
     <orderEntry type="library" scope="PROVIDED" name="matrix (v0.4.2, financo 3.2.2) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mini_mime (v1.1.5, financo 3.2.2) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="minitest (v5.22.3, financo 3.2.2) [gem]" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="money (v6.19.0, financo 3.2.2) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="msgpack (v1.7.2, financo 3.2.2) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="mutex_m (v0.2.0, financo 3.2.2) [gem]" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="net-imap (v0.4.10, financo 3.2.2) [gem]" level="application" />

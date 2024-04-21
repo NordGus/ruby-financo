@@ -23,12 +23,7 @@ class Account < ApplicationRecord
     }.freeze
   }.freeze
 
-  CURRENCIES = {
-    USD: "USD",
-    GBP: "GBP",
-    EUR: "EUR"
-  }.freeze
-
+  CURRENCIES = Money::Currency.table.values.map { |currency| currency[:iso_code] }.compact.uniq.freeze
   NAME_MIN_LENGTH = 3
   NAME_MAX_LENGTH = 120
 
@@ -49,7 +44,7 @@ class Account < ApplicationRecord
 
   validates :parent_id, comparison: { other_than: :id }, if: -> { parent_id.present? }
   validates :kind, presence: true, inclusion: { in: KINDS.values.map(&:values).flatten.compact }
-  validates :currency, presence: true, inclusion: { in: CURRENCIES.values }
+  validates :currency, presence: true, inclusion: { in: CURRENCIES }
   validates :name, presence: true, length: { minimum: NAME_MIN_LENGTH, maximum: NAME_MAX_LENGTH }
   validates :capital, presence: true
 
