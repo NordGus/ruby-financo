@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Transaction < ApplicationRecord
-  belongs_to :source, class_name: "Account", foreign_key: "source_id", inverse_of: :withdrawals
-  belongs_to :target, class_name: "Account", foreign_key: "target_id", inverse_of: :deposits
+  belongs_to :source, class_name: "Account", foreign_key: "source_id", inverse_of: :debits
+  belongs_to :target, class_name: "Account", foreign_key: "target_id", inverse_of: :credits
 
   validates :target, comparison: { other_than: :source }
   validates :source_amount, presence: true
