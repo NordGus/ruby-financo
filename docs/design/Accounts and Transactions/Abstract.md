@@ -20,7 +20,6 @@ or incurred, available credit or any source of income or expense.
 | name        | text                | not null              |
 | description | text                |                       |
 | color       | text                | not null              |
-| icon        | text                | not null              |
 | capital     | biginteger (64 bit) | not null, default `0` |
 | archived_at | timestamp           | index                 |
 | deleted_at  | timestamp           | index                 |
@@ -68,10 +67,9 @@ it is.
 For deletion, each Account can have a timestamp `deleted_at` to indicate it was deleted form the 
 system, and it will be completely removed on later time.
 
-For UI customization each account stores a `color` and an `icon` values. This values are always 
-present, `color` indicate to the UI the theming around the respective Account while `icon` 
-simply communicates which UI icon identifies it as well. This values are selected from a limited 
-list of options programmatically defined in the application.
+For UI customization each account stores a `color` value. This values are always present, 
+`color` indicate to the UI the theming around the respective Account. This value is selected from 
+a limited list of options programmatically defined in the application.
 
 ## Transactions
 Transactions are time series-like records that connect money movements between
