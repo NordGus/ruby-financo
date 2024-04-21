@@ -2,7 +2,6 @@
 
 class Account < ApplicationRecord
   include Customization::Colorable
-  include Customization::Iconazable
 
   KINDS = {
     system: {
