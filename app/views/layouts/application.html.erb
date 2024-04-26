@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>Financo</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -10,7 +10,18 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="h-[100dvh] grid grid-cols-[14vw_minmax(0,_1fr)]">
+    <nav class="overflow-y-auto">
+      <ul class="flex flex-col gap-2 py-2 px-1 items-start">
+        <%= render "layouts/nav_link", name: "accounts & goals", url: "#", is_active: false %>
+        <%= render "layouts/nav_link", name: "books", url: "#", is_active: false %>
+        <%= render "layouts/nav_link", name: "budgets", url: "#", is_active: false %>
+        <%= render "layouts/nav_link", name: "payment plans", url: "#", is_active: false %>
+        <%= render "layouts/nav_link", name: "summaries", url: "#", is_active: false %>
+      </ul>
+    </nav>
+    <div id="applet" class="h-[100dvh] overflow-y-auto">
+      <%= yield %>
+    </div>
   </body>
 </html>
