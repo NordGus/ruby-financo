@@ -44,8 +44,8 @@
         %>
       </ul>
     </nav>
-    <div id="applet" class="h-[100dvh] overflow-y-auto">
-      <%= yield %>
+    <div class="h-[100dvh] overflow-y-auto">
+      <%= content_for?(:content) ? yield(:content) : yield %>
     </div>
     <dialog
       id="modal"
