@@ -2,6 +2,7 @@
 
 module AccountsAndGoals
   class SummaryController < ApplicationController
+    before_action :protect_kinds, only: %i[capital debt]
     before_action :set_account_kinds, only: %i[capital debt]
     before_action :calculate_credits, only: %i[capital debt]
     before_action :calculate_debits, only: %i[capital debt]
@@ -22,6 +23,10 @@ module AccountsAndGoals
     end
 
     private
+
+    def protect_kinds
+      head :not_found unless %i[capital debt].include?(params[:action].to_sym)
+    end
 
     def set_account_kinds
       @account_kinds = Account::KINDS[params[:action].to_sym].values
