@@ -6,6 +6,14 @@ Rails.application.routes.draw do
 
   namespace :accounts_and_goals do
     get "/", to: "landing#landing"
+
+    resources :summary, only: [] do
+      collection do
+        get :capital
+        get :debt
+        get :total
+      end
+    end
   end
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

@@ -1,0 +1,2 @@
+module AccountsAndGoals::SummaryHelper
+end
