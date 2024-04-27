@@ -4,7 +4,7 @@
   class="[&[data-nav-active]]:min-w-[100%] hover:min-w-[95%] min-w-[85%] duration-150 ease-linear"
   <% if is_active %>data-nav-active<% end %>
 >
-  <%= render "components/card" do %>
-    <%= link_to name, url, class: "block cursor-pointer text-right pb-1 pt-4 px-3" %>
+  <%= render "components/card", additional_classes: (is_active ? "font-bold text-xl" : "") do %>
+    <%= link_to name, url, class: "block cursor-pointer text-right pb-1 pt-4 px-3 hover:font-bold" %>
   <% end %>
 </li>
