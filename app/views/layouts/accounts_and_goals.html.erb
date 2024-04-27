@@ -26,7 +26,7 @@
     <%= render "components/card", additional_classes: "flex flex-col" do %>
       <div class="flex justify-between items-baseline border-b">
         <h3 class="mx-3 text-lg">bank & savings accounts</h3>
-        <span class="px-3 py-2 border-l">new</span>
+        <span class="px-4 py-2.5 border-l cursor-pointer hover:bg-neutral-100">new</span>
       </div>
       <%= turbo_frame_tag :capital_accounts, class: "block flex-grow overflow-y-auto" do %>
         <div class="h-[100%] flex justify-center items-center">
@@ -37,7 +37,7 @@
     <%= render "components/card", additional_classes: "flex flex-col" do %>
       <div class="flex justify-between items-baseline border-b">
         <h3 class="mx-3 text-lg">loans & credit lines</h3>
-        <span class="px-3 py-2 border-l">new</span>
+        <span class="px-4 py-2.5 border-l cursor-pointer hover:bg-neutral-100">new</span>
       </div>
       <%= turbo_frame_tag :debt_accounts, class: "block flex-grow overflow-y-auto" do %>
         <div class="h-[100%] flex justify-center items-center">
@@ -48,7 +48,7 @@
     <%= render "components/card", additional_classes: "flex flex-col" do %>
       <div class="flex justify-between items-baseline border-b">
         <h3 class="mx-3 text-lg">income & expenses sources</h3>
-        <span class="px-3 py-2 border-l">new</span>
+        <span class="px-4 py-2.5 border-l cursor-pointer hover:bg-neutral-100">new</span>
       </div>
       <%= turbo_frame_tag :external_accounts, class: "block flex-grow overflow-y-auto" do %>
         <div class="h-[100%] flex justify-center items-center">
@@ -59,7 +59,7 @@
     <%= render "components/card", additional_classes: "flex flex-col" do %>
       <div class="flex justify-between items-baseline border-b">
         <h3 class="mx-3 text-lg">savings goals</h3>
-        <span class="px-3 py-2 border-l">new</span>
+        <span class="px-4 py-2.5 border-l cursor-pointer hover:bg-neutral-100">new</span>
       </div>
       <%= turbo_frame_tag :savings_goals, class: "block flex-grow overflow-y-auto" do %>
         <div class="h-[100%] flex justify-center items-center">
