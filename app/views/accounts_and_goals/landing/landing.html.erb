@@ -1,0 +1,25 @@
+<div class="p-2 h-[100%] grid gap-2 grid-cols-[minmax(0,_1fr)_minmax(0,_1fr)_30vw] grid-rows-[min-content_min-content_minmax(0,_1fr)_minmax(0,_1fr)]">
+  <%= render "components/card", additional_classes: "col-span-3 px-3 py-1.5 flex justify-between items-baseline" do %>
+    <h1 class="text-3xl">accounts & goals</h1>
+  <% end %>
+  <div class="col-span-2 grid gap-2 grid-cols-3">
+    <%= render "accounts_and_goals/landing/balance_item", name: "capital", amount: 177399, currency: "EUR" %>
+    <%= render "accounts_and_goals/landing/balance_item", name: "debt", amount: -42069, currency: "EUR" %>
+    <%= render "accounts_and_goals/landing/balance_item", name: "total", amount: 0, currency: "EUR" %>
+  </div>
+  <%= render "components/card", additional_classes: "row-span-3" do %>
+    <p>account or savings goal details/form space</p>
+  <% end %>
+  <%= render "components/card" do %>
+    <p>capital accounts space</p>
+  <% end %>
+  <%= render "components/card" do %>
+    <p>debt accounts space</p>
+  <% end %>
+  <%= render "components/card" do %>
+    <p>external accounts</p>
+  <% end %>
+  <%= render "components/card" do %>
+    <p>savings goals space</p>
+  <% end %>
+</div>
