@@ -1,8 +1,0 @@
-<%# locals: (name:, amount:, currency:) %>
-
-<%= render "components/card", additional_classes: "flex justify-between gap-2 px-3 py-1.5"  do %>
-  <p class="flex-grow"><%= name %></p>
-  <p class="flex-grow font-bold text-right <%= amount_text_color(amount) %>">
-    <%= Money.from_cents(amount.abs, currency).format %>
-  </p>
-<% end %>

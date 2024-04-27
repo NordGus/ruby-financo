@@ -3,9 +3,24 @@
     <h1 class="text-3xl">accounts & goals</h1>
   <% end %>
   <div class="col-span-2 grid gap-2 grid-cols-3">
-    <%= render "accounts_and_goals/landing/balance_item", name: "capital", amount: 177399, currency: "EUR" %>
-    <%= render "accounts_and_goals/landing/balance_item", name: "debt", amount: -42069, currency: "EUR" %>
-    <%= render "accounts_and_goals/landing/balance_item", name: "total", amount: 0, currency: "EUR" %>
+    <%=
+      render "accounts_and_goals/landing/balance_skeleton",
+             id: :capital_summary,
+             src: capital_accounts_and_goals_summary_index_path,
+             name: "capital"
+    %>
+    <%=
+      render "accounts_and_goals/landing/balance_skeleton",
+             id: :debts_summary,
+             src: debt_accounts_and_goals_summary_index_path,
+             name: "debt"
+    %>
+    <%=
+      render "accounts_and_goals/landing/balance_skeleton",
+             id: :total_summary,
+             src: total_accounts_and_goals_summary_index_path,
+             name: "total"
+    %>
   </div>
   <%= render "components/card", additional_classes: "row-span-3" do %>
     <p>account or savings goal details/form space</p>

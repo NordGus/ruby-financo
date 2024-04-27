@@ -1,0 +1,8 @@
+<%# locals: (id:, src:, name:) %>
+
+<%= turbo_frame_tag id, src: src do %>
+  <%= render "components/card", additional_classes: "flex justify-between gap-2 px-3 py-1.5"  do %>
+    <p class="flex-grow"><%= name %></p>
+    <p class="flex-grow font-bold text-right">loading</p>
+  <% end %>
+<% end %>

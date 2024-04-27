@@ -11,20 +11,14 @@ module AccountsAndGoals
 
     def capital
       @summary = calculate_summary(@debits, @credits)
-
-      render json: { summary: @summary }
     end
 
     def debt
       @summary = calculate_summary(@debits, @credits)
-
-      render json: { summary: @summary }
     end
 
     def total
       @summary = @capital_balance.merge(@debt_balance) { |_key, capital, debt| capital + debt }
-
-      render json: { summary: @summary }
     end
 
     private

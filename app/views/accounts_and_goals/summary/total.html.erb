@@ -1,2 +1,3 @@
-<h1>AccountsAndGoals::Summary#total</h1>
-<p>Find me in app/views/accounts_and_goals/summary/total.html.erb</p>
+<%= turbo_frame_tag :total_summary do %>
+  <%= render "accounts_and_goals/summary/summary", name: "total", summary: @summary %>
+<% end %>

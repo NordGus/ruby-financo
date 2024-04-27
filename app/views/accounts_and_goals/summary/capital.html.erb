@@ -1,2 +1,3 @@
-<h1>AccountsAndGoals::Summary#capital</h1>
-<p>Find me in app/views/accounts_and_goals/summary/capital.html.erb</p>
+<%= turbo_frame_tag :capital_summary do %>
+  <%= render "accounts_and_goals/summary/summary", name: "capital", summary: @summary %>
+<% end %>
