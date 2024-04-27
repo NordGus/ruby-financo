@@ -4,19 +4,19 @@
       <%=
         render "accounts_and_goals/balance_skeleton",
                id: :capital_summary,
-               src: capital_accounts_and_goals_summary_index_path,
+               src: accounts_and_goals_summary_capital_path,
                name: "capital"
       %>
       <%=
         render "accounts_and_goals/balance_skeleton",
                id: :debts_summary,
-               src: debt_accounts_and_goals_summary_index_path,
+               src: accounts_and_goals_summary_debt_path,
                name: "debt"
       %>
       <%=
         render "accounts_and_goals/balance_skeleton",
                id: :total_summary,
-               src: total_accounts_and_goals_summary_index_path,
+               src: accounts_and_goals_summary_total_path,
                name: "total"
       %>
     </div>
