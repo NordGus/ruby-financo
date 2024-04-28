@@ -9,7 +9,10 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   </head>
 
-  <body class="h-[100dvh] grid grid-cols-[14vw_minmax(0,_1fr)]">
+  <body
+    class="h-[100dvh] grid grid-cols-[15vw_minmax(0,_1fr)]"
+    data-controller="modal"
+  >
     <nav class="overflow-y-auto">
       <ul class="flex flex-col gap-2 py-2 px-1 items-start">
         <%=
@@ -48,9 +51,12 @@
       <%= content_for?(:content) ? yield(:content) : yield %>
     </div>
     <dialog
-      id="modal"
-      class="w-[35vw] min-h-[50dvh] max-h-[85dvh] shadow rounded-lg backdrop:backdrop-blur-sm backdrop:bg-neutral-500/40 mb-2 overflow-y-auto"
+      data-modal-target="dialog"
+      class="w-[35vw] shadow rounded-lg backdrop:backdrop-blur-sm backdrop:bg-neutral-500/30 mb-2 overflow-clip relative"
     >
+      <%= turbo_frame_tag :application_modal, class: "flex flex-col max-h-[90dvh]", data: { modal_target: "content" } do %>
+        <%= yield(:modal) %>
+      <% end %>
     </dialog>
   </body>
   <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>

@@ -1,0 +1,14 @@
+<div class="border-b flex justify-between items-baseline">
+  <div>
+    <%= yield(:headers) %>
+  </div>
+  <span
+    class="px-4 py-2.5 border-l cursor-pointer hover:bg-neutral-100"
+    data-action="click->modal#close"
+  >
+    close
+  </span>
+</div>
+<div class="flex-1 overflow-y-auto p-2">
+  <%= yield %>
+</div>
