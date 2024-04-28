@@ -38,7 +38,7 @@
         <h3 class="mx-3 text-lg">bank accounts</h3>
         <span class="px-4 py-2.5 border-l cursor-pointer hover:bg-neutral-100">new</span>
       </div>
-      <%= turbo_frame_tag :capital_normal_accounts, class: "block flex-grow overflow-y-auto" do %>
+      <%= turbo_frame_tag :capital_normal_accounts, src: accounts_and_goals_bank_accounts_path, class: "block flex-grow overflow-y-auto" do %>
         <div class="h-[100%] flex justify-center items-center">
           <%= render "components/spinner" %>
         </div>
