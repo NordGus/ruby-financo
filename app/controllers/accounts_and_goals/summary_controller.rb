@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module AccountsAndGoals
-  class SummaryController < ApplicationController
+  class SummaryController < AccountsAndGoalsController
     before_action :protect_kinds, only: %i[capital debt]
     before_action :set_account_kinds, only: %i[capital debt]
     before_action :calculate_credits, only: %i[capital debt]
@@ -9,6 +9,8 @@ module AccountsAndGoals
 
     before_action :calculate_capital_balance, only: :total
     before_action :calculate_debt_balance, only: :total
+
+    def applet; end
 
     def capital
       @summary = calculate_summary(@debits, @credits)

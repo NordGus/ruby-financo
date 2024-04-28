@@ -11,9 +11,9 @@ Rails.application.routes.draw do
   root "landing#landing"
 
   namespace :accounts_and_goals do
-    get "/", to: "landing#landing"
-    get "summary/capital", to: "summary#capital"
-    get "summary/debt", to: "summary#debt"
-    get "summary/total", to: "summary#total"
+    get "/", to: "summary#applet"
+    get "summary/capital", to: "summary#capital", as: :capital_summary
+    get "summary/debt", to: "summary#debt", as: :debt_summary
+    get "summary/total", to: "summary#total", as: :total_summary
   end
 end
