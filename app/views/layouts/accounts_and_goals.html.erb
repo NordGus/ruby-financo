@@ -39,7 +39,7 @@
         <span class="px-4 py-2.5 border-l cursor-pointer hover:bg-neutral-100">new</span>
       </div>
       <%= turbo_frame_tag :capital_normal_accounts,
-                          src: accounts_and_goals_accounts_path(kind: [Account::KINDS[:capital][:normal]]),
+                          src: accounts_and_goals_accounts_path(kinds: [Account::KINDS[:capital][:normal]]),
                           class: "block flex-grow overflow-y-auto" do %>
         <div class="h-[100%] flex justify-center items-center">
           <%= render "components/spinner" %>
@@ -52,7 +52,7 @@
         <span class="px-4 py-2.5 border-l cursor-pointer hover:bg-neutral-100">new</span>
       </div>
       <%= turbo_frame_tag :debt_loan_accounts,
-                          src: accounts_and_goals_accounts_path(kind: Account::KINDS[:debt].slice(:loan, :personal).values),
+                          src: accounts_and_goals_accounts_path(kinds: Account::KINDS[:debt].slice(:loan, :personal).values),
                           class: "block flex-grow overflow-y-auto" do %>
         <div class="h-[100%] flex justify-center items-center">
           <%= render "components/spinner" %>
@@ -65,7 +65,7 @@
         <span class="px-4 py-2.5 border-l cursor-pointer hover:bg-neutral-100">new</span>
       </div>
       <%= turbo_frame_tag :external_income_accounts,
-                          src: accounts_and_goals_accounts_path(kind: [Account::KINDS[:external][:income]]),
+                          src: accounts_and_goals_accounts_path(kinds: [Account::KINDS[:external][:income]]),
                           class: "block flex-grow overflow-y-auto" do %>
         <div class="h-[100%] flex justify-center items-center">
           <%= render "components/spinner" %>
@@ -79,7 +79,7 @@
         <span class="px-4 py-2.5 border-l cursor-pointer hover:bg-neutral-100">new</span>
       </div>
       <%= turbo_frame_tag :capital_savings_accounts,
-                          src: accounts_and_goals_accounts_path(kind: [Account::KINDS[:capital][:savings]]),
+                          src: accounts_and_goals_accounts_path(kinds: [Account::KINDS[:capital][:savings]]),
                           class: "block flex-grow overflow-y-auto" do %>
         <div class="h-[100%] flex justify-center items-center">
           <%= render "components/spinner" %>
@@ -92,7 +92,7 @@
         <span class="px-4 py-2.5 border-l cursor-pointer hover:bg-neutral-100">new</span>
       </div>
       <%= turbo_frame_tag :debt_credit_accounts,
-                          src: accounts_and_goals_accounts_path(kind: [Account::KINDS[:debt][:credit]]),
+                          src: accounts_and_goals_accounts_path(kinds: [Account::KINDS[:debt][:credit]]),
                           class: "block flex-grow overflow-y-auto" do %>
         <div class="h-[100%] flex justify-center items-center">
           <%= render "components/spinner" %>
@@ -105,7 +105,7 @@
         <span class="px-4 py-2.5 border-l cursor-pointer hover:bg-neutral-100">new</span>
       </div>
       <%= turbo_frame_tag :external_expense_accounts,
-                          src: accounts_and_goals_accounts_path(kind: [Account::KINDS[:external][:expense]]),
+                          src: accounts_and_goals_accounts_path(kinds: [Account::KINDS[:external][:expense]]),
                           class: "block flex-grow overflow-y-auto" do %>
         <div class="h-[100%] flex justify-center items-center">
           <%= render "components/spinner" %>

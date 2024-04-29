@@ -33,13 +33,13 @@ module AccountsAndGoals
     private
 
     def set_kinds
-      @kinds = (Account.visible_kinds_array & params[:kind].to_a).present? && params[:kind].to_a
+      @kinds = (Account.visible_kinds_array & params[:kinds].to_a).present? && params[:kinds].to_a
 
       head :bad_request unless @kinds.present?
     end
 
     def set_kind
-      @kind = Account.visible_kinds_array.include?(params.fetch(:kind, "").to_s) ? params[:kind].to_s : nil
+      @kind = Account.visible_kinds_array.include?(params.fetch(:kind, "").to_s) && params[:kind].to_s
 
       head :bad_request unless @kinds.present?
     end
