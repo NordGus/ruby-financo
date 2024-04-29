@@ -3,6 +3,12 @@
 class Account < ApplicationRecord
   include Customization::Colorable
 
+  # returns a flat array of all kinds that are visible by the user in the
+  # application's UI
+  def self.visible_kinds_array
+    KINDS.slice(:capital, :debt, :external).values.map(&:values).flatten.compact
+  end
+
   KINDS = {
     system: {
       history: "system.history"
@@ -49,7 +55,6 @@ class Account < ApplicationRecord
 
   default_scope -> { where(deleted_at: nil).order("archived_at DESC NULLS FIRST") }
 
-  def balance
-    credits.sum(:target_amount) - debits.sum(:source_amount)
-  end
+  scope :parents, -> { where(parent_id: nil) }
+  scope :visible, -> { where(kind: visible_kinds_array) }
 end

@@ -11,10 +11,8 @@ Rails.application.routes.draw do
   root "landing#landing"
 
   namespace :accounts_and_goals do
-    resources :bank_accounts, only: %i[index show new create update destroy] do
-      member do
-        get :balance, as: :balance_for
-      end
+    resources :accounts, only: %i[index show new create update destroy] do
+      get :balance, on: :member, as: :balance_for
     end
 
     get "/", to: "summary#applet"

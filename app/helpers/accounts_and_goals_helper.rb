@@ -7,10 +7,4 @@ module AccountsAndGoalsHelper
 
     ""
   end
-
-  def account_color(account)
-    color, intensity = account.color.split(".")
-
-    Account::COLORS[color.to_sym][intensity.to_i] || ""
-  end
 end
