@@ -2,7 +2,8 @@
 
 module AccountsAndGoals
   class AccountsController < AccountsAndGoalsController
-    before_action :set_kind, only: %i[index new]
+    before_action :set_kinds, only: :index
+    before_action :set_kind, only: :new
     before_action :set_account, only: %i[show update destroy balance]
 
     def index
@@ -26,14 +27,19 @@ module AccountsAndGoals
 
     def balance
       @balance = @account.credits.sum(:target_amount) - @account.debits.sum(:source_amount)
-      puts params.fetch(:preview, "false")
       @in_preview = params.fetch(:preview, "false") == "true"
     end
 
     private
 
-    def set_kind
+    def set_kinds
       @kinds = (Account.visible_kinds_array & params[:kind].to_a).present? && params[:kind].to_a
+
+      head :bad_request unless @kinds.present?
+    end
+
+    def set_kind
+      @kind = Account.visible_kinds_array.include?(params.fetch(:kind, "").to_s) ? params[:kind].to_s : nil
 
       head :bad_request unless @kinds.present?
     end
