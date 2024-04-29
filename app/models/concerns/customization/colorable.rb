@@ -114,7 +114,7 @@ module Customization
       blue: {
         100 => {},
         300 => {},
-        500 => "bg-blue-500 text-neutral-50",
+        500 => {},
         700 => {},
         900 => {}
       },
