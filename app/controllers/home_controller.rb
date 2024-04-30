@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-class LandingController < ApplicationController
+class HomeController < ApplicationController
   def landing; end
 end
