@@ -41,7 +41,7 @@ module AccountsAndGoals
     def set_kind
       @kind = Account.visible_kinds_array.include?(params.fetch(:kind, "").to_s) && params[:kind].to_s
 
-      head :bad_request unless @kinds.present?
+      head :bad_request unless @kind.present?
     end
 
     def set_account

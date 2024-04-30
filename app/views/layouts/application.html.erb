@@ -56,7 +56,11 @@
     >
       <%= turbo_frame_tag :application_modal,
                           class: "flex flex-col max-h-[90dvh]",
-                          data: { modal_target: "content", action: "turbo:frame-render->modal#open" } do %>
+                          data: {
+                            modal_target: "content",
+                            action: "turbo:frame-render->modal#open",
+                            turbo_action: "advance"
+                          } do %>
         <%= yield(:modal) %>
       <% end %>
     </dialog>
