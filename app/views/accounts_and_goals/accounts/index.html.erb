@@ -1,10 +1,11 @@
 <%= turbo_frame_tag "#{@kinds.first.gsub(".", "_")}_accounts" do %>
   <% if @accounts.any? %>
     <% @accounts.each do |account| %>
-      <%= turbo_frame_tag dom_id_for_account(account, preview: true), class: "block [&:not(:last-child)]:border-b" do %>
-        <%= link_to accounts_and_goals_account_path(account),
-                    class: "block p-1.5",
-                    data: { turbo_action: "advance", turbo_frame: "_top" } do %>
+      <%= turbo_frame_tag dom_id_for_account(account, preview: true),
+                          class: "block [&:not(:last-child)]:border-b",
+                          target: "_top",
+                          data: { turbo_action: "advance" } do %>
+        <%= link_to accounts_and_goals_account_path(account), class: "block p-1.5" do %>
           <h4 class="text-xl"><%= account.name %></h4>
           <% unless Account::KINDS[:external].values.include?(account.kind) %>
             <%= turbo_frame_tag dom_id_for_account_balance(account, preview: true),

@@ -13,53 +13,58 @@
     class="h-[100dvh] grid grid-cols-[15vw_minmax(0,_1fr)]"
     data-controller="modal"
   >
-    <nav class="h-[100%]">
-      <ul class="flex flex-col gap-2 py-2 px-1 items-start">
-        <%=
-          render "components/navigation/link",
-                 name: "accounts & goals",
-                 url: accounts_and_goals_path,
-                 is_active: params[:controller].include?("accounts_and_goals")
-        %>
-        <%=
-          render "components/navigation/link",
-                 name: "books",
-                 url: "#",
-                 is_active: false
-        %>
-        <%=
-          render "components/navigation/link",
-                 name: "budgets",
-                 url: "#",
-                 is_active: false
-        %>
-        <%=
-          render "components/navigation/link",
-                 name: "payment plans",
-                 url: "#",
-                 is_active: false
-        %>
-        <%=
-          render "components/navigation/link",
-                 name: "summaries",
-                 url: "#",
-                 is_active: false
-        %>
-      </ul>
-    </nav>
-    <div class="h-[100dvh] overflow-y-auto">
-      <%= content_for?(:content) ? yield(:content) : yield %>
+    <div class="flex flex-col justify-between py-2 px-1 gap-2 max-h-[100dvh]">
+      <%= turbo_frame_tag :navigation, target: "_top", data: { turbo_action: "advance" } do %>
+        <nav>
+          <ul class="flex flex-col gap-2 items-start">
+            <%=
+              render "components/navigation/link",
+                     name: "accounts & goals",
+                     url: accounts_and_goals_path,
+                     is_active: params[:controller].include?("accounts_and_goals")
+            %>
+            <%=
+              render "components/navigation/link",
+                     name: "books",
+                     url: "#",
+                     is_active: false
+            %>
+            <%=
+              render "components/navigation/link",
+                     name: "budgets",
+                     url: "#",
+                     is_active: false
+            %>
+            <%=
+              render "components/navigation/link",
+                     name: "payment plans",
+                     url: "#",
+                     is_active: false
+            %>
+            <%=
+              render "components/navigation/link",
+                     name: "summaries",
+                     url: "#",
+                     is_active: false
+            %>
+          </ul>
+        </nav>
+      <% end %>
     </div>
+    <%= turbo_frame_tag :applet, class: "h-[100dvh] overflow-y-auto", target: "_top", data: { turbo_action: "advance" } do %>
+      <%= content_for?(:content) ? yield(:content) : yield %>
+    <% end %>
     <dialog
       data-modal-target="dialog"
-      class="w-[35vw] shadow rounded-lg backdrop:backdrop-blur-sm backdrop:bg-neutral-500/30 mb-2 overflow-clip relative"
+      class="w-[35vw] shadow rounded backdrop:backdrop-blur-sm backdrop:bg-neutral-500/30 mb-1 overflow-clip relative"
     >
       <%= turbo_frame_tag :application_modal,
                           class: "flex flex-col max-h-[90dvh]",
+                          target: "_top",
                           data: {
                             modal_target: "content",
                             action: "turbo:frame-render->modal#open",
-                            turbo_action: "advance"
+                            turbo_action: "advance",
                           } do %>
         <%= yield(:modal) %>
       <% end %>

@@ -4,7 +4,7 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["dialog"];
   connect() {
-    if (this.dialogTarget.innerText.trim()) this.open();
+    if (this.dialogTarget.innerText.trim() && !this.dialogTarget.open) this.open();
     else this.close();
   }
 
