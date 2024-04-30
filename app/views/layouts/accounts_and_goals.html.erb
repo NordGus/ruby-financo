@@ -23,7 +23,7 @@
 
     <%= render "components/card", additional_classes: "flex flex-col row-span-3" do %>
       <div class="flex justify-between items-baseline border-b">
-        <h3 class="mx-3 text-lg">savings goals</h3>
+        <h3 class="ml-4 text-lg flex-grow">savings goals</h3>
         <span class="px-4 py-2.5 border-l cursor-pointer hover:bg-neutral-100">new</span>
       </div>
       <%= turbo_frame_tag :savings_goals, class: "block flex-grow overflow-y-auto" do %>
@@ -35,7 +35,7 @@
 
     <%= render "components/card", additional_classes: "flex flex-col" do %>
       <div class="flex justify-between items-baseline border-b">
-        <h3 class="mx-3 text-lg">bank accounts</h3>
+        <h3 class="ml-4 text-lg flex-grow">bank accounts</h3>
         <span class="px-4 py-2.5 border-l cursor-pointer hover:bg-neutral-100">new</span>
       </div>
       <%= turbo_frame_tag :capital_normal_accounts,
@@ -48,7 +48,7 @@
     <% end %>
     <%= render "components/card", additional_classes: "flex flex-col" do %>
       <div class="flex justify-between items-baseline border-b">
-        <h3 class="mx-3 text-lg">loans</h3>
+        <h3 class="ml-4 text-lg flex-grow">loans</h3>
         <span class="px-4 py-2.5 border-l cursor-pointer hover:bg-neutral-100">new</span>
       </div>
       <%= turbo_frame_tag :debt_loan_accounts,
@@ -61,7 +61,7 @@
     <% end %>
     <%= render "components/card", additional_classes: "flex flex-col" do %>
       <div class="flex justify-between items-baseline border-b">
-        <h3 class="mx-3 text-lg">income sources</h3>
+        <h3 class="ml-4 text-lg flex-grow">income sources</h3>
         <span class="px-4 py-2.5 border-l cursor-pointer hover:bg-neutral-100">new</span>
       </div>
       <%= turbo_frame_tag :external_income_accounts,
@@ -75,7 +75,7 @@
 
     <%= render "components/card", additional_classes: "flex flex-col" do %>
       <div class="flex justify-between items-baseline border-b">
-        <h3 class="mx-3 text-lg">savings accounts</h3>
+        <h3 class="ml-4 text-lg flex-grow">savings accounts</h3>
         <span class="px-4 py-2.5 border-l cursor-pointer hover:bg-neutral-100">new</span>
       </div>
       <%= turbo_frame_tag :capital_savings_accounts,
@@ -88,7 +88,7 @@
     <% end %>
     <%= render "components/card", additional_classes: "flex flex-col" do %>
       <div class="flex justify-between items-baseline border-b">
-        <h3 class="mx-3 text-lg">credit lines</h3>
+        <h3 class="ml-4 text-lg flex-grow">credit lines</h3>
         <span class="px-4 py-2.5 border-l cursor-pointer hover:bg-neutral-100">new</span>
       </div>
       <%= turbo_frame_tag :debt_credit_accounts,
@@ -101,7 +101,7 @@
     <% end %>
     <%= render "components/card", additional_classes: "flex flex-col" do %>
       <div class="flex justify-between items-baseline border-b">
-        <h3 class="mx-3 text-lg">expense sources</h3>
+        <h3 class="ml-4 text-lg flex-grow">expense sources</h3>
         <span class="px-4 py-2.5 border-l cursor-pointer hover:bg-neutral-100">new</span>
       </div>
       <%= turbo_frame_tag :external_expense_accounts,
