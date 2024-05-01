@@ -72,9 +72,10 @@ module AccountsAndGoals
       <<~SQL
         SELECT source.currency AS currency, SUM(-transactions.source_amount)::bigint AS amount
         FROM transactions
-        INNER JOIN accounts source ON transactions.source_id = source.id
+        INNER JOIN accounts source ON transactions.source_id = source.id AND source.deleted_at IS NULL
         WHERE source.kind IN (#{kinds.map { |kind| "'#{kind}'" }.join(',')})
         AND transactions.issued_at <= '#{Date.today}'
+        AND transactions.deleted_at IS NULL
         GROUP BY source.currency;
       SQL
     end
@@ -83,10 +84,11 @@ module AccountsAndGoals
       <<~SQL
         SELECT source.currency AS currency, SUM(transactions.target_amount)::bigint AS amount
         FROM transactions
-        INNER JOIN accounts source ON transactions.target_id = source.id
+        INNER JOIN accounts source ON transactions.target_id = source.id AND source.deleted_at IS NULL
         WHERE source.kind IN (#{kinds.map { |kind| "'#{kind}'" }.join(',')})
         AND transactions.executed_at IS NOT NULL
         AND transactions.executed_at <= '#{Date.today}'
+        AND transactions.deleted_at IS NULL
         GROUP BY source.currency;
       SQL
     end
