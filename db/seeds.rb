@@ -4,6 +4,8 @@
 ActiveRecord::Base.transaction do
   personal_account = Account.create_with(currency: "EUR", capital: 0, color: "blue.500")
                             .find_or_create_by!(kind: Account::KINDS[:capital][:normal], name: "Personal")
+  _savings_account = Account.create_with(currency: "EUR", capital: 0, color: "rose.500")
+                            .find_or_create_by!(kind: Account::KINDS[:capital][:savings], name: "Savings")
   income_account = Account.create_with(currency: "EUR", capital: 0, color: "green.500")
                           .find_or_create_by(kind: Account::KINDS[:external][:income], name: "Income")
   expense_account = Account.create_with(currency: "EUR", capital: 0, color: "red.500")
