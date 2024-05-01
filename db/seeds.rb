@@ -10,17 +10,19 @@ ActiveRecord::Base.transaction do
                            .find_or_create_by!(kind: Account::KINDS[:external][:expense], name: "Expense")
   loan_account = Account.create_with(currency: "EUR", capital: 75_000, color: "yellow.500")
                         .find_or_create_by!(kind: Account::KINDS[:debt][:loan], name: "Loan")
+  friend_loan_account = Account.create_with(currency: "EUR", capital: -10_000, color: "violet.500")
+                               .find_or_create_by!(kind: Account::KINDS[:debt][:personal], name: "Friend Loan")
 
   if personal_account.credits.count.zero?
+    # salary gets paid
     Transaction.create!(source: income_account,
                         target: personal_account,
                         source_amount: 250_000,
                         target_amount: 250_000,
                         issued_at: Date.today,
                         executed_at: Date.today)
-  end
 
-  if loan_account.debits.count.zero?
+    # the loan is received
     Transaction.create!(source: loan_account,
                         target: personal_account,
                         source_amount: 75_000,
@@ -30,16 +32,39 @@ ActiveRecord::Base.transaction do
   end
 
   if personal_account.debits.count.zero?
+    # expenses paid
     Transaction.create!(source: personal_account,
                         target: expense_account,
                         source_amount: 50_000,
                         target_amount: 50_000,
                         issued_at: Date.today,
                         executed_at: Date.today)
+
+    # loan payment done
     Transaction.create!(source: personal_account,
                         target: loan_account,
                         source_amount: 25_000,
                         target_amount: 25_000,
+                        issued_at: Date.today,
+                        executed_at: Date.today)
+  end
+
+  if friend_loan_account.credits.count.zero?
+    # send money to my friend
+    Transaction.create!(source: personal_account,
+                        target: friend_loan_account,
+                        source_amount: 10_000,
+                        target_amount: 10_000,
+                        issued_at: 5.days.ago.to_date,
+                        executed_at: 5.days.ago.to_date)
+  end
+
+  if friend_loan_account.debits.count.zero?
+    # friend pays me
+    Transaction.create!(source: friend_loan_account,
+                        target: personal_account,
+                        source_amount: 5_000,
+                        target_amount: 5_000,
                         issued_at: Date.today,
                         executed_at: Date.today)
   end

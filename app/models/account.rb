@@ -9,6 +9,10 @@ class Account < ApplicationRecord
     KINDS.slice(:capital, :debt, :external).values.map(&:values).flatten.compact
   end
 
+  def self.debt_loan_kinds_array
+    KINDS[:debt].slice(:loan, :personal).values.flatten.compact
+  end
+
   KINDS = {
     system: {
       history: "system.history"

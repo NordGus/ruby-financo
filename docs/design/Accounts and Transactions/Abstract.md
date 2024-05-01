@@ -57,7 +57,8 @@ target account to store as the transaction's exchange rate and maintain system c
 Accounts must have a `capital`, this value will be used on `debt` family Accounts to define the 
 credit limit for `debt.credit` Accounts or the amount owed/own for `debt.loan` Accounts. For all 
 other Accounts' `kind` this value should be `0` for normalization purposes and for future
-flexibility.
+flexibility. A positive value indicates that the user owes money while a negative value mean its 
+owed money.
 
 The field `archived_at` is a mechanism to communicate that an Account is no longer in use or closed,
 but all transactions to and from it continue to be present in the transaction listings. Being a 
