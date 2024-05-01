@@ -25,7 +25,7 @@ module AccountsAndGoals
 
     # TODO: design where to implement the store procedure
     def update
-      @form = Accounts::FormFor.update(@account, account_params.to_h)
+      @form = Accounts::FormFor.update(@account, attributes: account_params.to_h)
     end
 
     # TODO: design and implement soft deletion mechanism
@@ -48,7 +48,9 @@ module AccountsAndGoals
     end
 
     def account_params
-      params.require(:account).permit(:parent_id, :kind, :currency, :name, :description, :color, :capital, :archived_at)
+      params.require(:account).permit(
+        :parent_id, :kind, :currency, :name, :description, :color, :capital, :amount, :at, :archived
+      )
     end
 
     def new_account_params
