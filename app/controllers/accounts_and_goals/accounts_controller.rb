@@ -4,10 +4,10 @@ module AccountsAndGoals
   class AccountsController < AccountsAndGoalsController
     before_action :set_kinds, only: :index
     before_action :set_kind, only: :new
-    before_action :set_account, only: %i[show update destroy balance payment_progress]
+    before_action :set_account, only: %i[show update destroy]
 
     def index
-      @accounts = Account.parents.where(kind: @kinds).order(created_at: :desc)
+      @accounts = Account.includes(:credits, :debits).parents.where(kind: @kinds).order(created_at: :desc)
     end
 
     # TODO: implement form model

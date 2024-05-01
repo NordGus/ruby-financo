@@ -11,10 +11,7 @@ Rails.application.routes.draw do
   root "home#landing"
 
   namespace :accounts_and_goals do
-    resources :accounts, only: %i[index show new create update destroy] do
-      get :balance, on: :member, as: :balance_for
-      get :payment_progress, on: :member, as: :payment_progress_for
-    end
+    resources :accounts, only: %i[index show new create update destroy]
 
     get "/", to: "summary#applet"
     get "summary/capital", to: "summary#capital", as: :capital_summary

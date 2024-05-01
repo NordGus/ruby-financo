@@ -9,6 +9,7 @@ class Account < ApplicationRecord
     KINDS.slice(:capital, :debt, :external).values.map(&:values).flatten.compact
   end
 
+  # returns a flat array of all kinds of debt loans that the user can store
   def self.debt_loan_kinds_array
     KINDS[:debt].slice(:loan, :personal).values.flatten.compact
   end
@@ -66,7 +67,22 @@ class Account < ApplicationRecord
     KINDS[:debt].values.flatten.compact.include?(kind)
   end
 
+  def external?
+    KINDS[:external].values.flatten.compact.include?(kind)
+  end
+
   def credit_line?
     KINDS[:debt][:credit] == kind
+  end
+
+  def balance
+    @balance ||= credits.inject(0) { |sum, credit| sum + credit.target_amount } -
+                 debits.inject(0) { |sum, debit| sum + debit.source_amount }
+  end
+
+  def payment_progress
+    return 1 unless debt?
+
+    @payment_progress ||= (balance.to_f + capital) / capital
   end
 end

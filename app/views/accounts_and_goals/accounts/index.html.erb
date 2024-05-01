@@ -10,21 +10,19 @@
              class="h-[100%] flex flex-col justify-center <%= account.debt? ? "" : "col-span-2" %>"
           >
             <h4 class="text-xl"><%= account.name %></h4>
-            <% unless Account::KINDS[:external].values.include?(account.kind) %>
-              <%= turbo_frame_tag dom_id_for_account_balance(account, preview: true),
-                                  src: balance_for_accounts_and_goals_account_path(id: account.id, preview: true),
-                                  class: "flex justify-between" do %>
-                <%= render "components/spinner" %>
-              <% end %>
+            <% unless account.external? %>
+              <%=
+                render "accounts_and_goals/accounts/listable_balance",
+                       currency: account.currency,
+                       balance: account.balance,
+                       capital: account.capital,
+                       for_credit_line: account.credit_line?
+              %>
             <% end %>
             <p class="text-sm text-neutral-400 max-w-[100%] overflow-x-hidden"><%= account.description&.truncate(50) %></p>
           </div>
           <% if account.debt? %>
-            <%= turbo_frame_tag dom_id_for_account_payment_progress(account, preview: true),
-                                src: payment_progress_for_accounts_and_goals_account_path(account, preview: true),
-                                class: "my-auto flex justify-center items-center w-12 h-12 relative" do %>
-              <%= render "components/spinner" %>
-            <% end %>
+            <%= render "accounts_and_goals/accounts/listable_payment_progress", progress: account.payment_progress %>
           <% end %>
         <% end %>
       <% end %>

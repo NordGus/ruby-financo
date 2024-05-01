@@ -1,0 +1,13 @@
+<%# locals: (currency:, balance:, capital: 0, for_credit_line: false) %>
+
+<div class="flex justify-between">
+  <p class="<%= amount_text_color(balance) %> leading-none">
+    <%= Money.from_cents(balance.abs, currency).format %>
+  </p>
+  <% if for_credit_line %>
+    <p class="<%= amount_text_color(balance + capital) %> leading-none">
+      <%= Money.from_cents(balance + capital, currency).format %>
+    </p>
+  <% end %>
+</div>
+
