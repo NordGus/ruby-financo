@@ -9,9 +9,24 @@ class Account < ApplicationRecord
     KINDS.slice(:capital, :debt, :external).values.map(&:values).flatten.compact
   end
 
-  # returns a flat array of all kinds of debt loans that the user can store
+  # returns a flat array of all capital accounts kinds that the user can store
+  def self.capital_kinds_array
+    KINDS[:capital].values.flatten.compact
+  end
+
+  # returns a flat array of all debt loan kinds that the user can store
   def self.debt_loan_kinds_array
     KINDS[:debt].slice(:loan, :personal).values.flatten.compact
+  end
+
+  # returns a flat array of all debt credit lines kinds that the user can store
+  def self.debt_credit_line_kinds_array
+    KINDS[:debt].slice(:credit).values.flatten.compact
+  end
+
+  # returns a flat array of all external accounts kinds that the user can store
+  def self.external_kinds_array
+    KINDS[:external].values.flatten.compact
   end
 
   KINDS = {
