@@ -29,7 +29,9 @@ module AccountsAndGoals
     end
 
     # TODO: design and implement soft deletion mechanism
-    def destroy; end
+    def destroy
+      redirect_to accounts_and_goals_path
+    end
 
     private
 

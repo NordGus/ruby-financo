@@ -85,7 +85,7 @@
           <%=
             link_to t("ui.buttons.confirm"),
                     accounts_and_goals_account_path(@form),
-                    turbo_method: :delete,
+                    data: { turbo_method: :delete },
                     class: "px-4 min-w-20 border-l cursor-pointer text-neutral-50 bg-red-500 hover:bg-red-600 flex justify-center items-center"
           %>
           <span
