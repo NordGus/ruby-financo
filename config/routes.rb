@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   namespace :accounts_and_goals do
     resources :accounts, only: %i[index show new create update destroy] do
       get :balance, on: :member, as: :balance_for
+      get :payment_progress, on: :member, as: :payment_progress_for
     end
 
     get "/", to: "summary#applet"

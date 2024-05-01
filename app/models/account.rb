@@ -61,4 +61,12 @@ class Account < ApplicationRecord
 
   scope :parents, -> { where(parent_id: nil) }
   scope :visible, -> { where(kind: visible_kinds_array) }
+
+  def debt?
+    KINDS[:debt].values.flatten.compact.include?(kind)
+  end
+
+  def credit_line?
+    KINDS[:debt][:credit] == kind
+  end
 end

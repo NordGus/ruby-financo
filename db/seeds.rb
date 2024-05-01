@@ -12,6 +12,8 @@ ActiveRecord::Base.transaction do
                         .find_or_create_by!(kind: Account::KINDS[:debt][:loan], name: "Loan")
   friend_loan_account = Account.create_with(currency: "EUR", capital: -10_000, color: "violet.500")
                                .find_or_create_by!(kind: Account::KINDS[:debt][:personal], name: "Friend Loan")
+  credit_card_account = Account.create_with(currency: "EUR", capital: 300_000, color: "sky.500")
+                               .find_or_create_by!(kind: Account::KINDS[:debt][:credit], name: "Credit Card")
 
   if personal_account.credits.count.zero?
     # salary gets paid
@@ -65,6 +67,16 @@ ActiveRecord::Base.transaction do
                         target: personal_account,
                         source_amount: 5_000,
                         target_amount: 5_000,
+                        issued_at: Date.today,
+                        executed_at: Date.today)
+  end
+
+  if credit_card_account.debits.count.zero?
+    # paid something with credit
+    Transaction.create!(source: credit_card_account,
+                        target: expense_account,
+                        source_amount: 50_000,
+                        target_amount: 50_000,
                         issued_at: Date.today,
                         executed_at: Date.today)
   end

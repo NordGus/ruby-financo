@@ -5,16 +5,29 @@
                           class: "block [&:not(:last-child)]:border-b",
                           target: "_top",
                           data: { turbo_action: "advance" } do %>
-        <%= link_to accounts_and_goals_account_path(account), class: "block p-1.5" do %>
-          <h4 class="text-xl"><%= account.name %></h4>
-          <% unless Account::KINDS[:external].values.include?(account.kind) %>
-            <%= turbo_frame_tag dom_id_for_account_balance(account, preview: true),
-                                src: balance_for_accounts_and_goals_account_path(id: account.id, preview: true),
-                                class: "flex justify-between" do %>
+        <%= link_to accounts_and_goals_account_path(account), class: "p-1.5 grid grid-cols-[minmax(0,_1fr)_min-content] gap-2" do %>
+          <div
+            <% unless account.debt? %>
+             class="col-span-2"
+            <% end %>
+          >
+            <h4 class="text-xl"><%= account.name %></h4>
+            <% unless Account::KINDS[:external].values.include?(account.kind) %>
+              <%= turbo_frame_tag dom_id_for_account_balance(account, preview: true),
+                                  src: balance_for_accounts_and_goals_account_path(id: account.id, preview: true),
+                                  class: "flex justify-between" do %>
+                <%= render "components/spinner" %>
+              <% end %>
+            <% end %>
+            <p class="text-sm text-neutral-400 max-w-[100%] overflow-x-hidden"><%= account.description&.truncate(50) %></p>
+          </div>
+          <% if account.debt? %>
+            <%= turbo_frame_tag dom_id_for_account_payment_progress(account, preview: true),
+                                src: payment_progress_for_accounts_and_goals_account_path(account, preview: true),
+                                class: "m-auto" do %>
               <%= render "components/spinner" %>
             <% end %>
           <% end %>
-          <p class="text-sm text-neutral-400 leading-none max-w-[100%] overflow-hidden"><%= account.description&.truncate(50) %></p>
         <% end %>
       <% end %>
     <% end %>

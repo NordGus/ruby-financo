@@ -4,7 +4,7 @@ module AccountsAndGoals
   class AccountsController < AccountsAndGoalsController
     before_action :set_kinds, only: :index
     before_action :set_kind, only: :new
-    before_action :set_account, only: %i[show update destroy balance]
+    before_action :set_account, only: %i[show update destroy balance payment_progress]
 
     def index
       @accounts = Account.parents.where(kind: @kinds).order(created_at: :desc)
@@ -27,6 +27,15 @@ module AccountsAndGoals
 
     def balance
       @balance = @account.credits.sum(:target_amount) - @account.debits.sum(:source_amount)
+      @in_preview = params.fetch(:preview, "false") == "true"
+    end
+
+    def payment_progress
+      head :bad_request unless @account.debt?
+
+      balance = @account.credits.sum(:target_amount) - @account.debits.sum(:source_amount)
+
+      @progress = (balance.to_f + @account.capital) / @account.capital
       @in_preview = params.fetch(:preview, "false") == "true"
     end
 
