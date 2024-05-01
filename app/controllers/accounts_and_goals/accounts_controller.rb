@@ -18,7 +18,7 @@ module AccountsAndGoals
       @form = Accounts::FormFor.create(new_account_params.to_h)
     end
 
-    # TODO: and design where to implement the store procedure
+    # TODO: design where to implement the store procedure
     def create
       @form = Accounts::FormFor.create(account_params.to_h)
     end
