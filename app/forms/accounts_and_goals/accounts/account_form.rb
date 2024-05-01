@@ -43,11 +43,15 @@ module AccountsAndGoals
       end
 
       def self.model_name
-        ActiveModel::Name.new(self, AccountsAndGoals::Accounts, "AccountsAndGoals::Accounts::Account")
+        ActiveModel::Name.new(self, AccountsAndGoals, "Account")
       end
 
       def persisted?
         id.present?
+      end
+
+      def external?
+        Account.external_kinds_array.include?(kind)
       end
 
       private

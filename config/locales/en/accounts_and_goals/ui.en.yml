@@ -2,6 +2,7 @@ en:
   accounts_and_goals:
     ui:
       accounts:
+        historic_data_header: initial balance (for accounts with incomplete history)
         deletion_message: do you want to delete this account?
         kind:
           capital:
