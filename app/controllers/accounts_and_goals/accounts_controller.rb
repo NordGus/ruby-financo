@@ -3,7 +3,7 @@
 module AccountsAndGoals
   class AccountsController < AccountsAndGoalsController
     before_action :set_kinds, only: :index
-    before_action :filter_kind, only: :new
+    before_action :filter_kind, only: %i[new create]
     before_action :set_account, only: %i[show update destroy]
 
     def index
@@ -11,18 +11,22 @@ module AccountsAndGoals
     end
 
     def show
-      @form = Accounts::Form.for_account(@account)
+      @form = Accounts::FormFor.account(@account)
     end
 
     def new
-      @form = Form.for_params(params)
+      @form = FormFor.create(new_account_params.to_h)
     end
 
-    # TODO: implement form model, and design where to implement the store procedure
-    def create; end
+    # TODO: and design where to implement the store procedure
+    def create
+      @form = FormFor.create(account_params.to_h)
+    end
 
-    # TODO: implement form model, and design where to implement the store procedure
-    def update; end
+    # TODO: design where to implement the store procedure
+    def update
+      @form = FormFor.update(@account, account_params.to_h)
+    end
 
     # TODO: design and implement soft deletion mechanism
     def destroy; end
@@ -41,6 +45,14 @@ module AccountsAndGoals
 
     def set_account
       @account = Account.includes(:children, :debits, :credits).visible.find(params[:id])
+    end
+
+    def account_params
+      params.require(:account).permit(:parent_id, :kind, :currency, :name, :description, :color, :capital, :archived_at)
+    end
+
+    def new_account_params
+      params.permit(:kind)
     end
   end
 end

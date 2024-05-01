@@ -2,10 +2,7 @@
 
 module AccountsAndGoals
   module Accounts
-    class CapitalForm
-      def initialize(account: nil, params: {})
-        # initialize
-      end
+    class CapitalForm < AccountForm
     end
   end
 end

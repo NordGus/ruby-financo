@@ -58,9 +58,7 @@
       data-modal-target="dialog"
       class="w-[35vw] shadow rounded backdrop:backdrop-blur-sm backdrop:bg-neutral-500/30 mb-1 overflow-clip relative"
     >
-      <%= turbo_frame_tag :application_modal,
-                          class: "flex flex-col max-h-[90dvh]",
-                          target: "_top",
+      <%= turbo_frame_tag :application_modal, class: "max-h-[90dvh]", target: "_top",
                           data: {
                             modal_target: "content",
                             action: "turbo:frame-render->modal#open",

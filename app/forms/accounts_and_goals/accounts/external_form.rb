@@ -2,10 +2,7 @@
 
 module AccountsAndGoals
   module Accounts
-    class ExternalForm
-      def initialize(account: nil, params: {})
-        # initialize
-      end
+    class ExternalForm < AccountForm
     end
   end
 end

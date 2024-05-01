@@ -3,10 +3,7 @@
 module AccountsAndGoals
   module Accounts
     module Debt
-      class LoanForm
-        def initialize(account: nil, params: {})
-          # initialize
-        end
+      class LoanForm < AccountForm
       end
     end
   end
