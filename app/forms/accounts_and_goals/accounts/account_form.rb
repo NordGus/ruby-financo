@@ -3,6 +3,7 @@
 module AccountsAndGoals
   module Accounts
     class AccountForm < FormModel::Base
+      # Account attributes
       attribute :id, :string
       attribute :parent_id, :string
       attribute :kind, :string
@@ -14,11 +15,18 @@ module AccountsAndGoals
       attribute :archived_at, :datetime
       attribute :deleted_at, :datetime
 
+      # Account history values
+      attribute :amount, :integer
+      attribute :at, :date
+
+      # Account validations
       validates :parent_id, comparison: { other_than: :id }, if: -> { parent_id.present? }
       validates :kind, presence: true, inclusion: { in: Account.visible_kinds_array }
       validates :currency, presence: true, inclusion: { in: Account::CURRENCIES }
       validates :name, presence: true, length: { minimum: Account::NAME_MIN_LENGTH, maximum: Account::NAME_MAX_LENGTH }
       validates :capital, presence: true
+
+      validates :at, comparison: { less_than_or_equal_to: Time.zone.today }, if: -> { at.present? }
 
       def initialize(account: nil, attributes: {})
         if account.present?
