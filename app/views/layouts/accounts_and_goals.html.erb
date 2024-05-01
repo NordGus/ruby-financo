@@ -23,7 +23,7 @@
 
     <%=
       render "accounts_and_goals/listable_card",
-             title: t("accounts_and_goals.ui.lists.savings_goals.savings_goals"),
+             title: t("accounts_and_goals.ui.savings_goals"),
              new_url: "#",
              content_id: :savings_goals,
              src: nil,
@@ -32,21 +32,21 @@
 
     <%=
       render "accounts_and_goals/listable_card",
-             title: t("accounts_and_goals.ui.lists.accounts.capital.normal"),
+             title: t("accounts_and_goals.ui.accounts.kind.capital.normal"),
              new_url: new_accounts_and_goals_account_path(kind: Account::KINDS[:capital][:normal]),
              content_id: :capital_normal_accounts,
              src: accounts_and_goals_accounts_path(kinds: [Account::KINDS[:capital][:normal]])
     %>
     <%=
       render "accounts_and_goals/listable_card",
-             title: t("accounts_and_goals.ui.lists.accounts.debt.loans"),
+             title: t("accounts_and_goals.ui.accounts.kind.debt.loan"),
              new_url: new_accounts_and_goals_account_path(kind: Account::KINDS[:debt][:loan]),
              content_id: :debt_loan_accounts,
              src: accounts_and_goals_accounts_path(kinds: Account.debt_loan_kinds_array)
     %>
     <%=
       render "accounts_and_goals/listable_card",
-             title: t("accounts_and_goals.ui.lists.accounts.external.income"),
+             title: t("accounts_and_goals.ui.accounts.kind.external.income"),
              new_url: new_accounts_and_goals_account_path(kind: Account::KINDS[:external][:income]),
              content_id: :external_income_accounts,
              src: accounts_and_goals_accounts_path(kinds: [Account::KINDS[:external][:income]])
@@ -54,21 +54,21 @@
 
     <%=
       render "accounts_and_goals/listable_card",
-             title: t("accounts_and_goals.ui.lists.accounts.capital.savings"),
+             title: t("accounts_and_goals.ui.accounts.kind.capital.savings"),
              new_url: new_accounts_and_goals_account_path(kind: Account::KINDS[:capital][:savings]),
              content_id: :capital_savings_accounts,
              src: accounts_and_goals_accounts_path(kinds: [Account::KINDS[:capital][:savings]])
     %>
     <%=
       render "accounts_and_goals/listable_card",
-             title: t("accounts_and_goals.ui.lists.accounts.debt.credit"),
+             title: t("accounts_and_goals.ui.accounts.kind.debt.credit"),
              new_url: new_accounts_and_goals_account_path(kind: Account::KINDS[:debt][:credit]),
              content_id: :debt_credit_accounts,
              src: accounts_and_goals_accounts_path(kinds: [Account::KINDS[:debt][:credit]])
     %>
     <%=
       render "accounts_and_goals/listable_card",
-             title: t("accounts_and_goals.ui.lists.accounts.external.expense"),
+             title: t("accounts_and_goals.ui.accounts.kind.external.expense"),
              new_url: new_accounts_and_goals_account_path(kind: Account::KINDS[:external][:expense]),
              content_id: :external_expense_accounts,
              src: accounts_and_goals_accounts_path(kinds: [Account::KINDS[:external][:expense]])

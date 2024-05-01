@@ -1,21 +1,19 @@
 en:
   accounts_and_goals:
     ui:
-      buttons:
-        new: new
-      lists:
-        accounts:
+      accounts:
+        kind:
           capital:
             normal: bank accounts
             savings: savings accounts
           debt:
-            loans: loans
+            loan: loans
+            personal: personal loans
             credit: credit lines
           external:
             income: income
             expense: expenses
-        savings_goals:
-          savings_goals: savings goals
+      savings_goals: savings goals
       summary:
         capital: capital
         debt: debt

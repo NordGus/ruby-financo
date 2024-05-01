@@ -1,0 +1,8 @@
+en:
+  ui:
+    buttons:
+      close: close
+      new: new
+      delete: delete
+      yes: yes
+      no: no
