@@ -3,7 +3,7 @@
 module AccountsAndGoals
   class AccountsController < AccountsAndGoalsController
     before_action :set_kinds, only: :index
-    before_action :filter_kind, only: %i[new create]
+    before_action :filter_kind, only: :new
     before_action :set_account, only: %i[show update destroy]
 
     def index
@@ -15,12 +15,12 @@ module AccountsAndGoals
     end
 
     def new
-      @form = FormFor.create(new_account_params.to_h)
+      @form = Accounts::FormFor.create(new_account_params.to_h)
     end
 
     # TODO: and design where to implement the store procedure
     def create
-      @form = FormFor.create(account_params.to_h)
+      @form = Accounts::FormFor.create(account_params.to_h)
     end
 
     # TODO: design where to implement the store procedure

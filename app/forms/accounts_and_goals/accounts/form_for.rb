@@ -8,7 +8,7 @@ module AccountsAndGoals
       end
 
       def self.create(attributes)
-        form_for(kind: params[:kind], attributes:)
+        form_for(kind: attributes[:kind], attributes:)
       end
 
       def self.update(account, attributes: {})
