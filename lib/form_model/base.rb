@@ -17,5 +17,9 @@ module FormModel
     def persisted?
       raise NotImplementedError
     end
+
+    def new_record?
+      !persisted?
+    end
   end
 end
