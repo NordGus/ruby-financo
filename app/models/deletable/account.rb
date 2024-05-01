@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-module Deleted
-  class Account < DeletedRecord
+module Deletable
+  class Account < DeletableRecord
     self.table_name = ::Account.table_name
 
-    has_many :children, class_name: "Deleted::Account", foreign_key: "parent_id", dependent: :destroy
+    has_many :children, class_name: "Deletable::Account", foreign_key: "parent_id", dependent: :destroy
     has_many :debits,
-             class_name: "Deleted::Transaction",
+             class_name: "Deletable::Transaction",
              foreign_key: "source_id",
              dependent: :destroy,
              inverse_of: :source
     has_many :credits,
-             class_name: "Deleted::Transaction",
+             class_name: "Deletable::Transaction",
              foreign_key: "target_id",
              dependent: :destroy,
              inverse_of: :target

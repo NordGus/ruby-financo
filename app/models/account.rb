@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Account < ApplicationRecord
+class Account < SoftDeletableRecord
   include Customization::Colorable
 
   # returns a flat array of all kinds that are visible by the user in the
@@ -73,10 +73,9 @@ class Account < ApplicationRecord
   validates :name, presence: true, length: { minimum: NAME_MIN_LENGTH, maximum: NAME_MAX_LENGTH }
   validates :capital, presence: true
 
-  default_scope -> { where(deleted_at: nil).order("archived_at DESC NULLS FIRST") }
-
   scope :parents, -> { where(parent_id: nil) }
   scope :visible, -> { where(kind: visible_kinds_array) }
+  scope :for_listing, -> { order("archived_at DESC NULLS FIRST") }
 
   def debt?
     KINDS[:debt].values.flatten.compact.include?(kind)
@@ -99,18 +98,5 @@ class Account < ApplicationRecord
     return 1 unless debt?
 
     @payment_progress ||= (balance.to_f + capital) / capital
-  end
-
-  def soft_delete
-    now = Time.current
-
-    transaction do
-      credits.update_all(deleted_at: now, updated_at: now)
-      debits.update_all(deleted_at: now, updated_at: now)
-      children.update_all(deleted_at: now, updated_at: now)
-      update!(deleted_at: now)
-    end
-
-    deleted_at.present?
   end
 end

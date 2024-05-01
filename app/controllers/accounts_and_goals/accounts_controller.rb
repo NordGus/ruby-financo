@@ -7,7 +7,7 @@ module AccountsAndGoals
     before_action :set_account, only: %i[show update destroy]
 
     def index
-      @accounts = Account.includes(:credits, :debits).parents.where(kind: @kinds).order(created_at: :desc)
+      @accounts = Account.includes(:credits, :debits).for_listing.parents.where(kind: @kinds).order(created_at: :desc)
     end
 
     def show
@@ -28,8 +28,9 @@ module AccountsAndGoals
       @form = Accounts::FormFor.update(@account, attributes: account_params.to_h)
     end
 
-    # TODO: design and implement soft deletion mechanism
     def destroy
+      @account.destroy
+      
       redirect_to accounts_and_goals_path
     end
 
