@@ -1,3 +1,7 @@
 <%= turbo_frame_tag :capital_summary do %>
-  <%= render "accounts_and_goals/summary/summary", name: "capital", summary: @summary %>
+  <%=
+    render "accounts_and_goals/summary/summary",
+           name: t("accounts_and_goals.ui.summary.capital"),
+           summary: @summary
+  %>
 <% end %>

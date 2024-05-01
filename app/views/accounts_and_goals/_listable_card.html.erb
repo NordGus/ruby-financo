@@ -1,0 +1,13 @@
+<%# locals: (title:, new_url:, content_id:, src:, additional_classes: "") %>
+
+<%= render "components/card", additional_classes: "flex flex-col #{additional_classes}" do %>
+  <div class="flex justify-between items-stretch border-b h-12">
+    <h3 class="ml-4 text-lg flex-grow flex items-center"><%= title %></h3>
+    <%= link_to "new", new_url, class: "px-4 border-l cursor-pointer hover:bg-neutral-100 flex items-center" %>
+  </div>
+  <%= turbo_frame_tag content_id, src: src, class: "block flex-grow overflow-y-auto", reload: "morph" do %>
+    <div class="h-[100%] flex justify-center items-center">
+      <%= render "components/spinner" %>
+    </div>
+  <% end %>
+<% end %>

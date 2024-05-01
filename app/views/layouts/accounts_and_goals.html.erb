@@ -6,141 +6,73 @@
       render "accounts_and_goals/balance_skeleton",
              id: :capital_summary,
              src: accounts_and_goals_capital_summary_path,
-             name: "capital"
+             name: t("accounts_and_goals.ui.summary.capital")
     %>
     <%=
       render "accounts_and_goals/balance_skeleton",
              id: :debts_summary,
              src: accounts_and_goals_debt_summary_path,
-             name: "debt"
+             name: t("accounts_and_goals.ui.summary.debt")
     %>
     <%=
       render "accounts_and_goals/balance_skeleton",
              id: :total_summary,
              src: accounts_and_goals_total_summary_path,
-             name: "total"
+             name: t("accounts_and_goals.ui.summary.total")
     %>
 
-    <%= render "components/card", additional_classes: "flex flex-col row-span-3" do %>
-      <div class="flex justify-between items-baseline border-b">
-        <h3 class="ml-4 text-lg flex-grow">savings goals</h3>
-        <%=
-          link_to "new",
-                  "#",
-                  class: "px-4 py-2.5 border-l cursor-pointer hover:bg-neutral-100"
-        %>
-      </div>
-      <%= turbo_frame_tag :savings_goals, class: "block flex-grow overflow-y-auto" do %>
-        <div class="h-[100%] flex justify-center items-center">
-          <%= render "components/spinner" %>
-        </div>
-      <% end %>
-    <% end %>
+    <%=
+      render "accounts_and_goals/listable_card",
+             title: t("accounts_and_goals.ui.lists.savings_goals.savings_goals"),
+             new_url: "#",
+             content_id: :savings_goals,
+             src: nil,
+             additional_classes: "row-span-3"
+    %>
 
-    <%= render "components/card", additional_classes: "flex flex-col" do %>
-      <div class="flex justify-between items-baseline border-b">
-        <h3 class="ml-4 text-lg flex-grow">bank accounts</h3>
-        <%=
-          link_to "new",
-                  new_accounts_and_goals_account_path(kind: Account::KINDS[:capital][:normal]),
-                  class: "px-4 py-2.5 border-l cursor-pointer hover:bg-neutral-100"
-        %>
-      </div>
-      <%= turbo_frame_tag :capital_normal_accounts,
-                          src: accounts_and_goals_accounts_path(kinds: [Account::KINDS[:capital][:normal]]),
-                          class: "block flex-grow overflow-y-auto" do %>
-        <div class="h-[100%] flex justify-center items-center">
-          <%= render "components/spinner" %>
-        </div>
-      <% end %>
-    <% end %>
-    <%= render "components/card", additional_classes: "flex flex-col" do %>
-      <div class="flex justify-between items-baseline border-b">
-        <h3 class="ml-4 text-lg flex-grow">loans</h3>
-        <%=
-          link_to "new",
-                  new_accounts_and_goals_account_path(kind: Account::KINDS[:debt][:loan]),
-                  class: "px-4 py-2.5 border-l cursor-pointer hover:bg-neutral-100"
-        %>
-      </div>
-      <%= turbo_frame_tag :debt_loan_accounts,
-                          src: accounts_and_goals_accounts_path(kinds: Account::KINDS[:debt].slice(:loan, :personal).values),
-                          class: "block flex-grow overflow-y-auto" do %>
-        <div class="h-[100%] flex justify-center items-center">
-          <%= render "components/spinner" %>
-        </div>
-      <% end %>
-    <% end %>
-    <%= render "components/card", additional_classes: "flex flex-col" do %>
-      <div class="flex justify-between items-baseline border-b">
-        <h3 class="ml-4 text-lg flex-grow">income sources</h3>
-        <%=
-          link_to "new",
-                  new_accounts_and_goals_account_path(kind: Account::KINDS[:external][:income]),
-                  class: "px-4 py-2.5 border-l cursor-pointer hover:bg-neutral-100"
-        %>
-      </div>
-      <%= turbo_frame_tag :external_income_accounts,
-                          src: accounts_and_goals_accounts_path(kinds: [Account::KINDS[:external][:income]]),
-                          class: "block flex-grow overflow-y-auto" do %>
-        <div class="h-[100%] flex justify-center items-center">
-          <%= render "components/spinner" %>
-        </div>
-      <% end %>
-    <% end %>
+    <%=
+      render "accounts_and_goals/listable_card",
+             title: t("accounts_and_goals.ui.lists.accounts.capital.normal"),
+             new_url: new_accounts_and_goals_account_path(kind: Account::KINDS[:capital][:normal]),
+             content_id: :capital_normal_accounts,
+             src: accounts_and_goals_accounts_path(kinds: [Account::KINDS[:capital][:normal]])
+    %>
+    <%=
+      render "accounts_and_goals/listable_card",
+             title: t("accounts_and_goals.ui.lists.accounts.debt.loans"),
+             new_url: new_accounts_and_goals_account_path(kind: Account::KINDS[:debt][:loan]),
+             content_id: :debt_loan_accounts,
+             src: accounts_and_goals_accounts_path(kinds: Account.debt_loan_kinds_array)
+    %>
+    <%=
+      render "accounts_and_goals/listable_card",
+             title: t("accounts_and_goals.ui.lists.accounts.external.income"),
+             new_url: new_accounts_and_goals_account_path(kind: Account::KINDS[:external][:income]),
+             content_id: :external_income_accounts,
+             src: accounts_and_goals_accounts_path(kinds: [Account::KINDS[:external][:income]])
+    %>
 
-    <%= render "components/card", additional_classes: "flex flex-col" do %>
-      <div class="flex justify-between items-baseline border-b">
-        <h3 class="ml-4 text-lg flex-grow">savings accounts</h3>
-        <%=
-          link_to "new",
-                  new_accounts_and_goals_account_path(kind: Account::KINDS[:capital][:savings]),
-                  class: "px-4 py-2.5 border-l cursor-pointer hover:bg-neutral-100"
-        %>
-      </div>
-      <%= turbo_frame_tag :capital_savings_accounts,
-                          src: accounts_and_goals_accounts_path(kinds: [Account::KINDS[:capital][:savings]]),
-                          class: "block flex-grow overflow-y-auto" do %>
-        <div class="h-[100%] flex justify-center items-center">
-          <%= render "components/spinner" %>
-        </div>
-      <% end %>
-    <% end %>
-    <%= render "components/card", additional_classes: "flex flex-col" do %>
-      <div class="flex justify-between items-baseline border-b">
-        <h3 class="ml-4 text-lg flex-grow">credit lines</h3>
-        <%=
-          link_to "new",
-                  new_accounts_and_goals_account_path(kind: Account::KINDS[:debt][:credit]),
-                  class: "px-4 py-2.5 border-l cursor-pointer hover:bg-neutral-100"
-        %>
-      </div>
-      <%= turbo_frame_tag :debt_credit_accounts,
-                          src: accounts_and_goals_accounts_path(kinds: [Account::KINDS[:debt][:credit]]),
-                          class: "block flex-grow overflow-y-auto" do %>
-        <div class="h-[100%] flex justify-center items-center">
-          <%= render "components/spinner" %>
-        </div>
-      <% end %>
-    <% end %>
-    <%= render "components/card", additional_classes: "flex flex-col" do %>
-      <div class="flex justify-between items-baseline border-b">
-        <h3 class="ml-4 text-lg flex-grow">expense sources</h3>
-        <%=
-          link_to "new",
-                  new_accounts_and_goals_account_path(kind: Account::KINDS[:external][:expense]),
-                  class: "px-4 py-2.5 border-l cursor-pointer hover:bg-neutral-100"
-        %>
-      </div>
-      <%= turbo_frame_tag :external_expense_accounts,
-                          src: accounts_and_goals_accounts_path(kinds: [Account::KINDS[:external][:expense]]),
-                          class: "block flex-grow overflow-y-auto",
-                          reload: "morph" do %>
-        <div class="h-[100%] flex justify-center items-center">
-          <%= render "components/spinner" %>
-        </div>
-      <% end %>
-    <% end %>
+    <%=
+      render "accounts_and_goals/listable_card",
+             title: t("accounts_and_goals.ui.lists.accounts.capital.savings"),
+             new_url: new_accounts_and_goals_account_path(kind: Account::KINDS[:capital][:savings]),
+             content_id: :capital_savings_accounts,
+             src: accounts_and_goals_accounts_path(kinds: [Account::KINDS[:capital][:savings]])
+    %>
+    <%=
+      render "accounts_and_goals/listable_card",
+             title: t("accounts_and_goals.ui.lists.accounts.debt.credit"),
+             new_url: new_accounts_and_goals_account_path(kind: Account::KINDS[:debt][:credit]),
+             content_id: :debt_credit_accounts,
+             src: accounts_and_goals_accounts_path(kinds: [Account::KINDS[:debt][:credit]])
+    %>
+    <%=
+      render "accounts_and_goals/listable_card",
+             title: t("accounts_and_goals.ui.lists.accounts.external.expense"),
+             new_url: new_accounts_and_goals_account_path(kind: Account::KINDS[:external][:expense]),
+             content_id: :external_expense_accounts,
+             src: accounts_and_goals_accounts_path(kinds: [Account::KINDS[:external][:expense]])
+    %>
   </div>
 <% end %>
 

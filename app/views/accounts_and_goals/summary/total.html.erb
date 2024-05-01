@@ -1,3 +1,7 @@
 <%= turbo_frame_tag :total_summary do %>
-  <%= render "accounts_and_goals/summary/summary", name: "total", summary: @summary %>
+  <%=
+    render "accounts_and_goals/summary/summary",
+           name: t("accounts_and_goals.ui.summary.total"),
+           summary: @summary
+  %>
 <% end %>
