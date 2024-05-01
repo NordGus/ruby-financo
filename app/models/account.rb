@@ -100,4 +100,17 @@ class Account < ApplicationRecord
 
     @payment_progress ||= (balance.to_f + capital) / capital
   end
+
+  def soft_delete
+    now = Time.current
+
+    transaction do
+      credits.update_all(deleted_at: now, updated_at: now)
+      debits.update_all(deleted_at: now, updated_at: now)
+      children.update_all(deleted_at: now, updated_at: now)
+      update!(deleted_at: now)
+    end
+
+    deleted_at.present?
+  end
 end

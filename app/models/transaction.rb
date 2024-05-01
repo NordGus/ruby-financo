@@ -14,6 +14,14 @@ class Transaction < ApplicationRecord
 
   default_scope -> { where(deleted_at: nil) }
 
+  def soft_delete
+    transaction do
+      update!(deleted_at: Time.current)
+    end
+
+    deleted_at.present?
+  end
+
   private
 
   def amounts_negativity_or_positivity_match
