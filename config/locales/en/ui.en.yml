@@ -4,5 +4,5 @@ en:
       close: close
       new: new
       delete: delete
-      yes: yes
-      no: no
+      confirm: "yes"
+      cancel: "no"

@@ -2,6 +2,7 @@ en:
   accounts_and_goals:
     ui:
       accounts:
+        deletion_message: do you want to delete this account?
         kind:
           capital:
             normal: bank accounts

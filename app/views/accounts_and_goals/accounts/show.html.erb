@@ -1,10 +1,5 @@
 <% content_for :modal do %>
-  <%=
-    form_for [:accounts_and_goals, @form],
-             html: {
-               class: "flex flex-col max-h-[100vh]",
-               data: { controller: "" }
-             } do |form| %>
+  <%= form_for [:accounts_and_goals, @form], html: { class: "flex flex-col max-h-[100vh]", data: { controller: "deletable" } } do |form| %>
     <div class="flex justify-between items-stretch border-b h-14">
       <div class="flex-grow flex items-stretch">
         <span class="px-4 border-r flex justify-center items-center">
@@ -81,9 +76,29 @@
         %>
       </div>
       <div class="flex flex-col justify-between">
+        <div
+          class="flex justify-between items-stretch overflow-clip h-16 [&[data-hidden]]:h-0 duration-100"
+          data-hidden
+          data-deletable-target="confirmation"
+        >
+          <p class="flex items-center flex-grow pl-4"><%= t("accounts_and_goals.ui.accounts.deletion_message") %></p>
+          <%=
+            link_to t("ui.buttons.confirm"),
+                    accounts_and_goals_account_path(@form),
+                    turbo_method: :delete,
+                    class: "px-4 min-w-20 border-l cursor-pointer text-neutral-50 bg-red-500 hover:bg-red-600 flex justify-center items-center"
+          %>
+          <span
+            class="px-4 min-w-20 border-l cursor-pointer hover:bg-neutral-100 flex justify-center items-center"
+            data-action="click->deletable#cancel"
+          >
+            <%= t("ui.buttons.cancel") %>
+          </span>
+        </div>
         <span
-          class="text-lg flex-grow h-16 bg-red-200 text-red-500 hover:bg-red-500 hover:text-neutral-50 flex justify-center items-center"
-          data-form--account-target="delete"
+          class="text-lg flex-grow h-16 [&[data-hidden]]:h-0 overflow-y-clip text-neutral-50 bg-red-500 hover:bg-red-600 flex justify-center items-center cursor-pointer duration-100"
+          data-deletable-target="trigger"
+          data-action="click->deletable#confirm"
         >
           <%= t("ui.buttons.delete") %>
         </span>
