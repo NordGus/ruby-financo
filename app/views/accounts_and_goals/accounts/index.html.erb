@@ -2,14 +2,12 @@
   <% if @accounts.any? %>
     <% @accounts.each do |account| %>
       <%= turbo_frame_tag dom_id_for_account(account, preview: true),
-                          class: "block [&:not(:last-child)]:border-b",
+                          class: "block [&:not(:last-child)]:border-b hover:bg-neutral-100/25",
                           target: "_top",
                           data: { turbo_action: "advance" } do %>
-        <%= link_to accounts_and_goals_account_path(account), class: "p-1.5 grid grid-cols-[minmax(0,_1fr)_min-content] gap-2" do %>
+        <%= link_to accounts_and_goals_account_path(account), class: "min-h-20 p-1.5 grid grid-cols-[minmax(0,_1fr)_min-content] gap-2" do %>
           <div
-            <% unless account.debt? %>
-             class="col-span-2"
-            <% end %>
+             class="h-[100%] flex flex-col justify-center <%= account.debt? ? "" : "col-span-2" %>"
           >
             <h4 class="text-xl"><%= account.name %></h4>
             <% unless Account::KINDS[:external].values.include?(account.kind) %>
@@ -24,7 +22,7 @@
           <% if account.debt? %>
             <%= turbo_frame_tag dom_id_for_account_payment_progress(account, preview: true),
                                 src: payment_progress_for_accounts_and_goals_account_path(account, preview: true),
-                                class: "m-auto" do %>
+                                class: "my-auto flex justify-center items-center w-12 h-12 relative" do %>
               <%= render "components/spinner" %>
             <% end %>
           <% end %>

@@ -1,8 +1,14 @@
 <%= turbo_frame_tag dom_id_for_account_balance(@account, preview: @in_preview) do %>
   <% if @account.credit_line? %>
-    <p class="<%= amount_text_color(@balance) %>"><%= Money.from_cents(@balance.abs, @account.currency).format %></p>
-    <p class="<%= amount_text_color(@balance + @account.capital) %>"><%= Money.from_cents(@balance + @account.capital, @account.currency).format %></p>
+    <p class="<%= amount_text_color(@balance) %> leading-none">
+      <%= Money.from_cents(@balance.abs, @account.currency).format %>
+    </p>
+    <p class="<%= amount_text_color(@balance + @account.capital) %> leading-none">
+      <%= Money.from_cents(@balance + @account.capital, @account.currency).format %>
+    </p>
   <% else %>
-    <p class="<%= amount_text_color(@balance) %> leading-none"><%= Money.from_cents(@balance.abs, @account.currency).format %></p>
+    <p class="<%= amount_text_color(@balance) %> leading-none">
+      <%= Money.from_cents(@balance.abs, @account.currency).format %>
+    </p>
   <% end %>
 <% end %>
