@@ -15,9 +15,12 @@ module AccountsAndGoals
       attribute :archived_at, :datetime
       attribute :deleted_at, :datetime
 
-      # Account history values
+      # Account history attributes
       attribute :amount, :integer
       attribute :at, :date
+
+      # Form specific attributes
+      attribute :archived, :boolean, default: false
 
       # Account validations
       validates :parent_id, comparison: { other_than: :id }, if: -> { parent_id.present? }
@@ -26,11 +29,14 @@ module AccountsAndGoals
       validates :name, presence: true, length: { minimum: Account::NAME_MIN_LENGTH, maximum: Account::NAME_MAX_LENGTH }
       validates :capital, presence: true
 
+      # Account history validations
       validates :at, comparison: { less_than_or_equal_to: Time.zone.today }, if: -> { at.present? }
+
+      after_initialize :set_archived
 
       def initialize(account: nil, attributes: {})
         if account.present?
-          super(account.attributes.except("created_at", "updated_at").merge(attributes))
+          super(account.attributes.except("created_at", "updated_at").merge(attributes).with_indifferent_access)
         else
           super(attributes)
         end
@@ -42,6 +48,12 @@ module AccountsAndGoals
 
       def persisted?
         id.present?
+      end
+
+      private
+
+      def set_archived
+        self.archived = archived_at.present?
       end
     end
   end
