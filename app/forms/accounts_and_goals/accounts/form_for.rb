@@ -3,16 +3,20 @@
 module AccountsAndGoals
   module Accounts
     class FormFor
-      # TODO: implement logic for history
       def self.account(account)
-        form_for(kind: account.kind, account:, attributes: { "archived" => account.archived_at.present? })
+        attributes = {
+          "archived" => account.archived_at.present?,
+          "at" => account.history&.debits&.first&.issued_at,
+          "amount" => account.history&.debits&.first&.source_amount
+        }
+
+        form_for(kind: account.kind, account:, attributes:)
       end
 
       def self.create(attributes)
         form_for(kind: attributes[:kind], attributes:)
       end
 
-      # TODO: implement logic for history
       def self.update(account, attributes: {})
         form_for(kind: account.kind, account:, attributes:)
       end

@@ -17,9 +17,9 @@
   </div>
   <div class="flex-grow block overflow-y-auto">
     <%= form.hidden_field :kind %>
-    <% if flash[:success].present? %>
+    <% if flash[:notice].present? %>
       <div class="[&:not(:last-child)]:border-b">
-        <p class="h-16 px-4 bg-green-500 text-green-700 flex items-center"><%= flash[:success] %></p>
+        <p class="h-16 px-4 bg-green-200 text-green-700 flex items-center"><%= flash[:notice] %></p>
       </div>
     <% end %>
     <% if account.errors.messages_for(:form_persistence).any? %>
@@ -79,6 +79,15 @@
       </div>
       <% account.errors.messages_for(:at).each do |error| %>
         <%= render "components/forms/messages/error", message: error %>
+      <% end %>
+      <% unless account.new_record? %>
+        <div class="border-y text-lg flex justify-between items-center">
+          <%= form.label :clear_history, class: "px-4 h-16 text-lg flex-grow flex items-center bg-transparent border-transparent hover:bg-neutral-100 cursor-pointer" %>
+          <%=
+            form.check_box :clear_history,
+                           class: "h-16 w-16 appearance-none border-l grid items-center place-content-center before:h-16 before:w-16 before:block before:bg-neutral-900 before:content-[''] before:scale-0 checked:before:scale-100 before:duration-100 before:linear cursor-pointer"
+          %>
+        </div>
       <% end %>
     <% end %>
     <% unless account.new_record? %>

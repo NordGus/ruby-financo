@@ -21,6 +21,7 @@ module AccountsAndGoals
 
       # Form specific attributes
       attribute :archived, :boolean, default: false
+      attribute :clear_history, :boolean, default: false
 
       # Account validations
       validates :parent_id, comparison: { other_than: :id }, if: -> { parent_id.present? }
@@ -76,13 +77,22 @@ module AccountsAndGoals
         )
 
         update_history_currency!(history)
-        update_or_create_history_debit!(history) if amount.present?
+
+        if clear_history
+          clear_history_debit!(history)
+        elsif amount.present?
+          update_or_create_history_debit!(history)
+        end
 
         account
       end
 
       def update_history_currency!(history)
         history.update!(currency:) unless currency == history.currency
+      end
+
+      def clear_history_debit!(history)
+        history.debits&.first&.destroy! unless new_record?
       end
 
       def update_or_create_history_debit!(history)
@@ -96,8 +106,17 @@ module AccountsAndGoals
 
         if debit.new_record?
           debit.save!
-        else
-          debit.update!(issued_at: at, executed_at: at, source_amount: amount, target_amount: amount)
+        elsif history_debit_params(debit).present?
+          debit.update!(history_debit_params(debit))
+        end
+      end
+
+      def history_debit_params(debit)
+        @history_debit_params ||= begin
+          params = { issued_at: at, executed_at: at, source_amount: amount, target_amount: amount }
+          params.reject! { |attr| params[attr] == debit.issued_at }
+          params.reject! { |attr| params[attr] == debit.source_amount }
+          params
         end
       end
 
