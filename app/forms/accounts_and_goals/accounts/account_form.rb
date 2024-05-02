@@ -86,7 +86,7 @@ module AccountsAndGoals
         )
 
         update_history_currency!(history)
-        update_or_create_history_debit!(history) unless amount.present?
+        update_or_create_history_debit!(history) if amount.present?
 
         account
       end
