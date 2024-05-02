@@ -81,7 +81,7 @@ module AccountsAndGoals
           name: Account::HISTORY_ACCOUNT_NAME,
           kind: Account::KINDS[:system][:history],
           currency:,
-          color: Account::COLORS[:slate][300],
+          color: Account::HISTORY_ACCOUNT_COLOR,
           capital: 0
         )
 
