@@ -58,7 +58,7 @@ class Account < SoftDeletableRecord
   belongs_to :parent, class_name: "Account", foreign_key: "parent_id", optional: true
   has_many :children, class_name: "Account", foreign_key: "parent_id", dependent: :destroy
   has_one :history,
-          -> { where(kind: KINDS[:system][:system]) },
+          -> { where(kind: KINDS[:system][:history]) },
           class_name: "Account",
           foreign_key: "parent_id",
           dependent: :destroy
