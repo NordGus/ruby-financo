@@ -52,8 +52,15 @@ class Account < SoftDeletableRecord
   NAME_MIN_LENGTH = 3
   NAME_MAX_LENGTH = 120
 
+  HISTORY_ACCOUNT_NAME = "System::History"
+
   belongs_to :parent, class_name: "Account", foreign_key: "parent_id", optional: true
   has_many :children, class_name: "Account", foreign_key: "parent_id", dependent: :destroy
+  has_one :history,
+          -> { where(kind: KINDS[:system][:system]) },
+          class_name: "Account",
+          foreign_key: "parent_id",
+          dependent: :destroy
   has_many :debits,
            -> { order(issued_at: :desc) },
            class_name: "Transaction",

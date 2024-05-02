@@ -3,6 +3,30 @@
 module AccountsAndGoals
   module Accounts
     class CapitalForm < AccountForm
+      def save
+        super do
+          account = find_or_initialize_account!
+          account = update_or_create_account!(account)
+          account = create_or_update_history!(account)
+          account = archive_account!(account)
+          update_id(account)
+        end
+      end
+
+      private
+
+      def find_or_initialize_account!
+        if new_record?
+          Account.new(kind:, currency:, name:, description:, color:, capital: 0)
+        else
+          Account.includes(:children, history: [:debits]).where(kind:).find(id)
+        end
+      end
+
+      def update_or_create_account!(account)
+        new_record? ? account.save! : account.update!(kind:, currency:, name:, description:, color:)
+        account
+      end
     end
   end
 end
