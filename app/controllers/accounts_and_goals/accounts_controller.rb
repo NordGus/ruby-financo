@@ -19,7 +19,7 @@ module AccountsAndGoals
     end
 
     def create
-      @form = Accounts::FormFor.create(account_params.to_h)
+      @form = Accounts::FormFor.create(account_params.to_h.merge("color" => "red.500")) # TODO: implement color picker
 
       if @form.save
         redirect_to accounts_and_goals_account_path(@form), notice: "account saved"
