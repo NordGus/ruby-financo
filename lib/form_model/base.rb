@@ -3,15 +3,13 @@
 module FormModel
   class Base
     include ActiveModel::Model
-    extend ActiveModel::Callbacks
     include ActiveModel::Attributes
+    extend ActiveModel::Callbacks
 
     define_model_callbacks :initialize, only: :after
 
     def initialize(*)
-      run_callbacks :initialize do
-        super(*)
-      end
+      run_callbacks(:initialize) { super(*) }
     end
 
     def persisted?
