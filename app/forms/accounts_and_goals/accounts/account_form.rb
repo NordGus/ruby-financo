@@ -21,7 +21,6 @@ module AccountsAndGoals
 
       # Form specific attributes
       attribute :archived, :boolean, default: false
-      attribute :persistence, :boolean, default: false
 
       # Account validations
       validates :parent_id, comparison: { other_than: :id }, if: -> { parent_id.present? }
@@ -35,6 +34,7 @@ module AccountsAndGoals
       validates :at, comparison: { less_than_or_equal_to: Time.zone.today }, if: -> { at.present? }
 
       after_initialize :set_archived
+      after_save :set_archived
 
       def initialize(account: nil, attributes: {})
         if account.present?
@@ -50,19 +50,6 @@ module AccountsAndGoals
 
       def persisted?
         id.present?
-      end
-
-      def save
-        return nil unless valid?
-
-        ActiveRecord::Base.transaction do
-          return yield
-        rescue StandardError => e
-          logger.error "failed to save #{self.class}:\n\t#{e.message}\n\t\t#{e.backtrace&.join("\n\t\t")}\n"
-          errors.add(:persistence, :failed_to_persist)
-          set_archived
-          raise ActiveRecord::Rollback
-        end
       end
 
       def external?
