@@ -9,7 +9,7 @@ module FormModel
     define_model_callbacks :initialize, only: :after
     define_model_callbacks :save, only: :after
 
-    attribute :persistence, :boolean, default: false
+    attribute :form_persistence, :boolean, default: false
 
     def initialize(*)
       run_callbacks(:initialize) { super(*) }
@@ -22,11 +22,17 @@ module FormModel
         ActiveRecord::Base.transaction do
           return yield
         rescue StandardError => e
-          logger.error "failed to save #{self.class}:\n\t#{e.message}\n\t\t#{e.backtrace&.join("\n\t\t")}\n"
-          errors.add(:persistence, :failed_to_persist)
+          Rails.logger.error "failed to save #{self.class}:\n\t#{e.message}\n\t\t#{e.backtrace&.join("\n\t\t")}\n"
+          errors.add(
+            :form_persistence,
+            :failed_to_persist,
+            message: "something when wrong while saving #{model_name.element}"
+          )
 
           raise ActiveRecord::Rollback
         end
+
+        nil
       end
     end
 

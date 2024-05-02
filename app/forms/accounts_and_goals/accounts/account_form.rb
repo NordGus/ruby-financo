@@ -33,12 +33,9 @@ module AccountsAndGoals
       validates :at, presence: true, if: -> { amount.present? }
       validates :at, comparison: { less_than_or_equal_to: Time.zone.today }, if: -> { at.present? }
 
-      after_initialize :set_archived
-      after_save :set_archived
-
       def initialize(account: nil, attributes: {})
         if account.present?
-          super(account.attributes.except("created_at", "updated_at").merge(attributes).with_indifferent_access)
+          super(account.attributes.except("created_at", "updated_at").merge(attributes))
         else
           super(attributes)
         end
@@ -59,19 +56,12 @@ module AccountsAndGoals
       protected
 
       def archive_account!(account)
-        return account unless persisted?
+        return account if archived_at.present? == archived
 
-        self.archived_at = Time.current
+        self.archived_at = archived ? Time.current : archived
 
-        account.transaction do
-          account.children.update_all(archived_at:, updated_at: archived_at)
-          account.update!(archived_at:)
-        end
-
-        if account.archived_at.nil?
-          self.archived_at = nil
-          raise ActiveRecord::Rollback, "failed to archived Account #{account.id}"
-        end
+        account.children.update_all(archived_at:, updated_at: Time.current)
+        account.update!(archived_at:)
 
         account
       end
@@ -115,12 +105,6 @@ module AccountsAndGoals
         self.id = account.id if new_record?
 
         account
-      end
-
-      private
-
-      def set_archived
-        self.archived = archived_at.present?
       end
     end
   end

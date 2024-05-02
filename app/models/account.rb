@@ -53,6 +53,7 @@ class Account < SoftDeletableRecord
   NAME_MAX_LENGTH = 120
 
   HISTORY_ACCOUNT_NAME = "System::History"
+  HISTORY_ACCOUNT_COLOR = "slate.300"
 
   belongs_to :parent, class_name: "Account", foreign_key: "parent_id", optional: true
   has_many :children, class_name: "Account", foreign_key: "parent_id", dependent: :destroy

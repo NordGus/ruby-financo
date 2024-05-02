@@ -18,19 +18,25 @@ module AccountsAndGoals
       @form = Accounts::FormFor.create(new_account_params.to_h)
     end
 
-    # TODO: design where to implement the store procedure
     def create
       @form = Accounts::FormFor.create(account_params.to_h)
+
+      if @form.save
+        redirect_to accounts_and_goals_account_path(@form), success: "account saved"
+      else
+        render :update
+      end
     end
 
-    # TODO: design where to implement the store procedure
     def update
       @form = Accounts::FormFor.update(@account, attributes: account_params.to_h)
+
+      redirect_to accounts_and_goals_account_path(@form), success: "account saved" if @form.save
     end
 
     def destroy
       @account.destroy
-      
+
       redirect_to accounts_and_goals_path
     end
 
