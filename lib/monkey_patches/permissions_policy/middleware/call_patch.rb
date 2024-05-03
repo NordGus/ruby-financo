@@ -80,8 +80,8 @@ module MonkeyPatches
             request = ActionDispatch::Request.new(env)
 
             if (policy = request.permissions_policy)
-              headers[PERMISSIONS_POLICY] = PermissionsPolicyHeader.build(policy, request.controller_instance)
-              headers[FEATURE_POLICY] = FeaturePolicyHeader.build(policy, request.controller_instance)
+              headers[PERMISSIONS_POLICY] = policy.build(request.controller_instance, builder: PermissionsPolicyHeader)
+              headers[FEATURE_POLICY] = policy.build(request.controller_instance, builder: FeaturePolicyHeader)
             end
 
             if policy_empty?(policy)
@@ -91,6 +91,8 @@ module MonkeyPatches
 
             response
           end
+
+          # rubocop:disable Metrics/ClassLength
           class << self
             private
 
@@ -107,153 +109,154 @@ module MonkeyPatches
             def policy_empty?(policy)
               policy&.directives&.empty?
             end
-          end
 
-          module PermissionsPolicyHeader
-            MAPPINGS = {
-              self: "self",
-              none: "",
-              all: "*"
-            }.freeze
+            module PermissionsPolicyHeader
+              MAPPINGS = {
+                self: "self",
+                none: "",
+                all: "*"
+              }.freeze
 
-            module_function
+              module_function
 
-            def build(policy, context = nil)
-              build_directives(policy, context).compact.join(", ")
-            end
+              def build(policy, context = nil)
+                build_directives(policy, context).compact.join(", ")
+              end
 
-            def build_directives(policy, context)
-              policy.directives.map do |directive, s|
-                sources = apply_mappings(s)
-                if sources.is_a?(Array)
-                  allow_list = build_allow_list(sources, context)
-                  if allow_list.include?(MAPPINGS[:none])
-                    "#{directive}=()"
-                  elsif allow_list.include?(MAPPINGS[:all])
-                    "#{directive}=#{MAPPINGS[:all]}"
-                  else
-                    "#{directive}=(#{allow_list.join(' ')})"
+              def build_directives(policy, context)
+                policy.directives.map do |directive, s|
+                  sources = apply_mappings(s)
+                  if sources.is_a?(Array)
+                    allow_list = build_allow_list(sources, context)
+                    if allow_list.include?(MAPPINGS[:none])
+                      "#{directive}=()"
+                    elsif allow_list.include?(MAPPINGS[:all])
+                      "#{directive}=#{MAPPINGS[:all]}"
+                    else
+                      "#{directive}=(#{allow_list.join(' ')})"
+                    end
+                  elsif sources
+                    directive
                   end
-                elsif sources
-                  directive
                 end
               end
-            end
 
-            def build_allow_list(sources, context)
-              sources.map { |source| resolve_source(source, context) }
-            end
-
-            def resolve_source(source, context)
-              case source
-              when String
-                if MAPPINGS.value?(source)
-                  source
-                else
-                  "\"#{source}\""
-                end
-              when Symbol
-                source.to_s
-              when Proc
-                raise "Missing context for the dynamic permissions policy source: #{source.inspect}" if context.nil?
-
-                context.instance_exec(&source)
-
-              else
-                raise "Unexpected permissions policy source: #{source.inspect}"
+              def build_allow_list(sources, context)
+                sources.map { |source| resolve_source(source, context) }
               end
-            end
 
-            def apply_mappings(sources)
-              sources.map do |source|
+              def resolve_source(source, context)
                 case source
-                when Symbol
-                  apply_mapping(source)
-                when String, Proc
-                  source
-                else
-                  raise ArgumentError, "Invalid HTTP permissions policy source: #{source.inspect}"
-                end
-              end
-            end
-
-            def apply_mapping(source)
-              MAPPINGS.fetch(source) do
-                raise ArgumentError, "Unknown HTTP permissions policy source mapping: #{source.inspect}"
-              end
-            end
-          end
-
-          module FeaturePolicyHeader
-            MAPPINGS = {
-              self: "'self'",
-              none: "'none'",
-              all: "*"
-            }.freeze
-
-            module_function
-
-            def build(policy, context = nil)
-              build_directives(policy, context).compact.join("; ")
-            end
-
-            def build_directives(policy, context)
-              policy.directives.map do |directive, s|
-                sources = apply_mappings(s)
-                if sources.is_a?(Array)
-                  allow_list = build_allow_list(sources, context)
-                  if allow_list.include?(MAPPINGS[:none])
-                    "#{directive} #{MAPPINGS[:none]}"
-                  elsif allow_list.include?(MAPPINGS[:all])
-                    "#{directive} #{MAPPINGS[:all]}"
+                when String
+                  if MAPPINGS.value?(source)
+                    source
                   else
-                    "#{directive} #{allow_list.join(' ')}"
+                    "\"#{source}\""
                   end
-                elsif sources
-                  directive
-                end
-              end
-            end
-
-            def build_allow_list(sources, context)
-              sources.map { |source| resolve_source(source, context) }
-            end
-
-            def resolve_source(source, context)
-              case source
-              when String
-                source
-              when Symbol
-                source.to_s
-              when Proc
-                raise "Missing context for the dynamic permissions policy source: #{source.inspect}" if context.nil?
-
-                context.instance_exec(&source)
-
-              else
-                raise "Unexpected permissions policy source: #{source.inspect}"
-              end
-            end
-
-            def apply_mappings(sources)
-              sources.map do |source|
-                case source
                 when Symbol
-                  apply_mapping(source)
-                when String, Proc
-                  source
+                  source.to_s
+                when Proc
+                  raise "Missing context for the dynamic permissions policy source: #{source.inspect}" if context.nil?
+
+                  context.instance_exec(&source)
+
                 else
-                  raise ArgumentError, "Invalid HTTP permissions policy source: #{source.inspect}"
+                  raise "Unexpected permissions policy source: #{source.inspect}"
+                end
+              end
+
+              def apply_mappings(sources)
+                sources.map do |source|
+                  case source
+                  when Symbol
+                    apply_mapping(source)
+                  when String, Proc
+                    source
+                  else
+                    raise ArgumentError, "Invalid HTTP permissions policy source: #{source.inspect}"
+                  end
+                end
+              end
+
+              def apply_mapping(source)
+                MAPPINGS.fetch(source) do
+                  raise ArgumentError, "Unknown HTTP permissions policy source mapping: #{source.inspect}"
                 end
               end
             end
 
-            def apply_mapping(source)
-              MAPPINGS.fetch(source) do
-                raise ArgumentError, "Unknown HTTP permissions policy source mapping: #{source.inspect}"
+            module FeaturePolicyHeader
+              MAPPINGS = {
+                self: "'self'",
+                none: "'none'",
+                all: "*"
+              }.freeze
+
+              module_function
+
+              def build(policy, context = nil)
+                build_directives(policy, context).compact.join("; ")
+              end
+
+              def build_directives(policy, context)
+                policy.directives.map do |directive, s|
+                  sources = apply_mappings(s)
+                  if sources.is_a?(Array)
+                    allow_list = build_allow_list(sources, context)
+                    if allow_list.include?(MAPPINGS[:none])
+                      "#{directive} #{MAPPINGS[:none]}"
+                    elsif allow_list.include?(MAPPINGS[:all])
+                      "#{directive} #{MAPPINGS[:all]}"
+                    else
+                      "#{directive} #{allow_list.join(' ')}"
+                    end
+                  elsif sources
+                    directive
+                  end
+                end
+              end
+
+              def build_allow_list(sources, context)
+                sources.map { |source| resolve_source(source, context) }
+              end
+
+              def resolve_source(source, context)
+                case source
+                when String
+                  source
+                when Symbol
+                  source.to_s
+                when Proc
+                  raise "Missing context for the dynamic permissions policy source: #{source.inspect}" if context.nil?
+
+                  context.instance_exec(&source)
+
+                else
+                  raise "Unexpected permissions policy source: #{source.inspect}"
+                end
+              end
+
+              def apply_mappings(sources)
+                sources.map do |source|
+                  case source
+                  when Symbol
+                    apply_mapping(source)
+                  when String, Proc
+                    source
+                  else
+                    raise ArgumentError, "Invalid HTTP permissions policy source: #{source.inspect}"
+                  end
+                end
+              end
+
+              def apply_mapping(source)
+                MAPPINGS.fetch(source) do
+                  raise ArgumentError, "Unknown HTTP permissions policy source mapping: #{source.inspect}"
+                end
               end
             end
           end
+          # rubocop:enable Metrics/ClassLength
         end
       end
     end
