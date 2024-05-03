@@ -68,7 +68,7 @@ module MonkeyPatches
           # this middleware inserts both headers. For now `POLICY` still refers
           # to the old header name. This will change in the future, when
           # Permissions-Policy is supported by all browsers.
-          POLICY             = "Feature-Policy"
+          FEATURE_POLICY     = "Feature-Policy"
           PERMISSIONS_POLICY = "Permissions-Policy"
 
           def call(env)
@@ -81,12 +81,12 @@ module MonkeyPatches
 
             if (policy = request.permissions_policy)
               headers[PERMISSIONS_POLICY] = PermissionsPolicyHeader.build(policy, request.controller_instance)
-              headers[POLICY] = FeaturePolicyHeader.build(policy, request.controller_instance)
+              headers[FEATURE_POLICY] = FeaturePolicyHeader.build(policy, request.controller_instance)
             end
 
             if policy_empty?(policy)
               headers.delete(PERMISSIONS_POLICY)
-              headers.delete(POLICY)
+              headers.delete(FEATURE_POLICY)
             end
 
             response
@@ -101,7 +101,7 @@ module MonkeyPatches
             end
 
             def policy_present?(headers)
-              headers[PERMISSIONS_POLICY] || headers[POLICY]
+              headers[PERMISSIONS_POLICY] || headers[FEATURE_POLICY]
             end
 
             def policy_empty?(policy)
