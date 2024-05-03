@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "action_dispatch"
+require_relative "../../../lib/middleware/builders/feature_policy_header"
 
 module MonkeyPatches
   module PermissionsPolicy

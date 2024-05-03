@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "../../lib/monkey_patches/permissions_policy/middleware/call_patch"
 require_relative "../../lib/monkey_patches/permissions_policy/build_patch"
+require_relative "../../lib/monkey_patches/permissions_policy/middleware/call_patch"
 
 # Be sure to restart your server when you modify this file.
 
