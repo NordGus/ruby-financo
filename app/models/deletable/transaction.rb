@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 module Deletable
-  class Transaction < DeletableRecord
+  class Transaction < ApplicationRecord
+    include DeletableRecord
+
     self.table_name = ::Transaction.table_name
 
     belongs_to :source, class_name: "Deletable::Account", foreign_key: "source_id", inverse_of: :debits
