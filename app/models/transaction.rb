@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class Transaction < SoftDeletableRecord
+class Transaction < ApplicationRecord
+  include SoftDeletableRecord
+
   belongs_to :source, class_name: "Account", foreign_key: "source_id", inverse_of: :debits
   belongs_to :target, class_name: "Account", foreign_key: "target_id", inverse_of: :credits
 

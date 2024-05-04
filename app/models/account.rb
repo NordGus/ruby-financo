@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-class Account < SoftDeletableRecord
+class Account < ApplicationRecord
   include Customization::Colorable
+  include SoftDeletableRecord
 
   # returns a flat array of all kinds that are visible by the user in the
   # application's UI
