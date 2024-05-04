@@ -15,6 +15,10 @@ en:
           external:
             income: income
             expense: expenses
+        listable:
+          kind:
+            debt:
+              personal: personal
       savings_goals: savings goals
       summary:
         capital: capital

@@ -16,7 +16,8 @@
                        currency: account.currency,
                        balance: account.balance,
                        capital: account.capital,
-                       for_credit_line: account.credit_line?
+                       credit_line: account.credit_line?,
+                       personal_loan: account.personal_loan?
               %>
             <% end %>
             <p class="text-sm text-neutral-400 max-w-[100%] overflow-x-hidden"><%= account.description&.truncate(50) %></p>

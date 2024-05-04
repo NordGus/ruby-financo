@@ -1,13 +1,15 @@
-<%# locals: (currency:, balance:, capital: 0, for_credit_line: false) %>
+<%# locals: (currency:, balance:, capital: 0, credit_line: false, personal_loan: false) %>
 
 <div class="flex justify-between">
   <p class="<%= amount_text_color(balance) %> leading-none">
     <%= Money.from_cents(balance.abs, currency).format %>
   </p>
-  <% if for_credit_line %>
+  <% if credit_line %>
     <p class="<%= amount_text_color(balance + capital) %> leading-none">
       <%= Money.from_cents(balance + capital, currency).format %>
     </p>
+  <% elsif personal_loan %>
+    <p class="leading-none text-neutral-400"><%= t('accounts_and_goals.ui.accounts.listable.kind.debt.personal') %></p>
   <% end %>
 </div>
 

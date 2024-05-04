@@ -24,3 +24,7 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+# TODO
+
+- [ ] learn more about rails internationalization to build better UI an error messages
