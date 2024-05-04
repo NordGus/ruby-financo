@@ -4,6 +4,8 @@ require_relative "../../../lib/middleware/builders/feature_policy_header"
 
 module MonkeyPatches
   module PermissionsPolicy
+    # = MonkeyPatches::PermissionsPolicy::BuildPatch
+    # This patch is no longer in use
     module BuildPatch
       class << self
         EXPIRATION_DATE = Date.new(2024, 8, 15)
