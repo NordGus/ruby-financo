@@ -1,0 +1,15 @@
+<%# locals: (form:, attr:, placeholder: nil, rows: 3, autofocus: false, error_messages: []) %>
+
+<%= render "components/forms/inputs/input_group",
+           form:,
+           attr:,
+           error_messages: error_messages,
+           additional_classes: "flex flex-col min-h-16" do %>
+  <%=
+    form.text_area :description,
+                   class: "px-4 pt-7 pb-2 text-lg flex-grow focus:bg-neutral-100 hover:bg-neutral-100 resize-y",
+                   rows:,
+                   placeholder: "add a simple description",
+                   autofocus: autofocus
+  %>
+<% end %>
