@@ -1,7 +1,9 @@
-<%# locals: (form:, attr:, error_messages: [], additional_classes: "") %>
+<%# locals: (form:, attr:, error_messages: [], additional_classes: "", without_label: false) %>
 
-<div class="[&:not(:last-child)]:border-b relative <%= additional_classes %>">
-  <%= form.label attr, class: "px-4 pt-1 text-sm absolute top-0" %>
+<div class="<%= without_label ? "" : "relative" %> <%= additional_classes %>">
+  <% unless without_label %>
+    <%= form.label attr, class: "px-4 pt-1 text-sm absolute top-0" %>
+  <% end %>
   <%= yield %>
 </div>
 <% error_messages.each do |error| %>

@@ -18,7 +18,7 @@
               class: "px-4 border-l cursor-pointer hover:bg-neutral-100 flex justify-center items-center"
     %>
   </div>
-  <div class="overflow-y-auto">
+  <div class="divide-y overflow-y-auto">
     <%= form.hidden_field :kind %>
     <% if flash[:notice].present? %>
       <%= render "components/forms/messages/big", message: flash[:notice], type: :success %>
