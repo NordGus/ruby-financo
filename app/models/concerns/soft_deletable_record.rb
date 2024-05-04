@@ -10,9 +10,7 @@ module SoftDeletableRecord
   private_instance_methods :_raise_record_not_destroyed
 
   def destroy
-    transaction do
-      run_callbacks(:destroy) { update!(deleted_at: Time.current) }
-    end
+    run_callbacks(:destroy) { update(deleted_at: Time.current) }
 
     deleted_at.present?
   end

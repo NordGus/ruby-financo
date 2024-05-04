@@ -30,6 +30,10 @@ class Account < ApplicationRecord
     KINDS[:external].values.flatten.compact
   end
 
+  def self.history_kind
+    KINDS[:system][:history]
+  end
+
   KINDS = {
     system: {
       history: "system.history"
@@ -58,11 +62,8 @@ class Account < ApplicationRecord
 
   belongs_to :parent, class_name: "Account", foreign_key: "parent_id", optional: true
   has_many :children, class_name: "Account", foreign_key: "parent_id", dependent: :destroy
-  has_one :history,
-          -> { where(kind: KINDS[:system][:history]) },
-          class_name: "Account",
-          foreign_key: "parent_id",
-          dependent: :destroy
+  has_one :history, -> { where(kind: history_kind) }, class_name: "Account", foreign_key: "parent_id"
+
   has_many :debits,
            -> { order(issued_at: :desc) },
            class_name: "Transaction",
