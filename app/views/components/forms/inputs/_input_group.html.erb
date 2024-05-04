@@ -1,0 +1,9 @@
+<%# locals: (form:, attr:, error_messages: [], additional_classes: "") %>
+
+<div class="[&:not(:last-child)]:border-b relative <%= additional_classes %>">
+  <%= form.label attr, class: "px-4 pt-1 text-sm absolute top-0" %>
+  <%= yield %>
+</div>
+<% error_messages.each do |error| %>
+  <%= render "components/forms/messages/small", message: error, type: :error %>
+<% end %>
