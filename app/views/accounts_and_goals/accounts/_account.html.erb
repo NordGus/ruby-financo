@@ -3,19 +3,19 @@
                class: modal_parent_element_classes,
                data: { controller: "deletable" }
              } do |form| %>
-  <div class="flex justify-between items-stretch border-b h-14">
-    <span class="px-4 border-r flex justify-center items-center">
+  <div class="flex justify-between divide-x items-stretch h-14">
+    <span class="px-4 flex justify-center items-center">
         <%= t("accounts_and_goals.ui.accounts.kind.#{form.object.kind}") %>
       </span>
     <div class="flex-grow content-['']"></div>
     <%=
       form.submit nil,
-                  class: "px-4 border-l cursor-pointer bg-green-500 text-neutral-50 hover:bg-green-400 flex justify-center items-center"
+                  class: "px-4 cursor-pointer bg-green-500 text-neutral-50 hover:bg-green-400 flex justify-center items-center"
     %>
     <%=
       link_to t("ui.buttons.close"),
               accounts_and_goals_path,
-              class: "px-4 border-l cursor-pointer hover:bg-neutral-100 flex justify-center items-center"
+              class: "px-4 cursor-pointer hover:bg-neutral-100 flex justify-center items-center"
     %>
   </div>
   <div class="divide-y overflow-y-auto">
@@ -48,9 +48,11 @@
              placeholder: "add a simple description"
     %>
     <% unless account.external? %>
+      <%= render "components/forms/separator" %>
       <%= render "accounts_and_goals/accounts/account/historic_fields", form:, account: %>
     <% end %>
     <% unless account.new_record? %>
+      <%= render "components/forms/separator" %>
       <%= render "accounts_and_goals/accounts/account/archive_and_deletion", form:, account: %>
     <% end %>
   </div>
