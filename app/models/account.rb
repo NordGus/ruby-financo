@@ -91,12 +91,16 @@ class Account < ApplicationRecord
     KINDS[:debt].values.flatten.compact.include?(kind)
   end
 
+  def credit_line?
+    KINDS[:debt][:credit] == kind
+  end
+
   def external?
     KINDS[:external].values.flatten.compact.include?(kind)
   end
 
-  def credit_line?
-    KINDS[:debt][:credit] == kind
+  def personal_loan?
+    KINDS[:debt][:personal] == kind ? true : nil
   end
 
   def balance
