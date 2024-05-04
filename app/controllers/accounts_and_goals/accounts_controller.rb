@@ -24,14 +24,18 @@ module AccountsAndGoals
       if @form.save
         redirect_to accounts_and_goals_account_path(@form), notice: "account saved"
       else
-        render :update
+        render :form
       end
     end
 
     def update
       @form = Accounts::FormFor.update(@account, attributes: account_params.to_h)
 
-      redirect_to accounts_and_goals_account_path(@form), notice: "account saved" if @form.save
+      if @form.save
+        redirect_to accounts_and_goals_account_path(@form), notice: "account saved"
+      else
+        render :form
+      end
     end
 
     def destroy
@@ -58,7 +62,8 @@ module AccountsAndGoals
 
     def account_params
       params.require(:account).permit(
-        :parent_id, :kind, :currency, :name, :description, :color, :capital, :amount, :at, :archived, :clear_history
+        :parent_id, :kind, :currency, :name, :description, :color, :capital, :amount, :at, :archived,
+        :clear_history, :personal_loan
       )
     end
 

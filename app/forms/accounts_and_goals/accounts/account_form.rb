@@ -20,8 +20,9 @@ module AccountsAndGoals
       attribute :at, :date
 
       # Form specific attributes
-      attribute :archived, :boolean, default: false
+      attribute :personal_loan, :boolean, default: false
       attribute :clear_history, :boolean, default: false
+      attribute :archived, :boolean, default: false
 
       # Account validations
       validates :parent_id, comparison: { other_than: :id }, if: -> { parent_id.present? }
@@ -52,6 +53,10 @@ module AccountsAndGoals
 
       def external?
         Account.external_kinds_array.include?(kind)
+      end
+
+      def loan?
+        Account.debt_loan_kinds_array.include?(kind)
       end
 
       protected

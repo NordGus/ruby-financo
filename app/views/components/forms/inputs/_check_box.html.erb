@@ -1,12 +1,12 @@
 <%# locals: (form:, attr:, checked_value: "1", unchecked_value: "0", autofocus: false, error_messages: []) %>
 
 <%= render "components/forms/inputs/input_group", form:, attr:, error_messages: error_messages,
-           without_label: true, additional_classes: "flex text-lg justify-between items-center" do %>
+           without_label: true, additional_classes: "flex text-lg justify-between items-center divide-x" do %>
   <%= form.label attr, class: "px-4 h-16 flex-grow flex items-center hover:bg-neutral-100 cursor-pointer" %>
   <%=
     form.check_box attr,
                    {
-                     class: "h-16 w-16 appearance-none border-l grid items-center place-content-center before:h-16 before:w-16 before:block before:bg-neutral-900 before:content-[''] before:scale-0 checked:before:scale-100 before:duration-100 before:linear cursor-pointer"
+                     class: "h-16 w-16 appearance-none grid items-center place-content-center before:h-16 before:w-16 before:block before:bg-neutral-900 before:content-[''] before:scale-0 checked:before:scale-100 before:duration-100 before:linear cursor-pointer"
                    },
                    checked_value,
                    unchecked_value

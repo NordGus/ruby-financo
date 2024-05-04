@@ -3,7 +3,9 @@
                class: modal_parent_element_classes,
                data: { controller: "deletable" }
              } do |form| %>
-  <div class="flex justify-between divide-x items-stretch h-14">
+  <%= form.hidden_field :kind %>
+
+  <div class="flex justify-between divide-x items-stretch h-14 border-b">
     <span class="px-4 flex justify-center items-center">
         <%= t("accounts_and_goals.ui.accounts.kind.#{form.object.kind}") %>
       </span>
@@ -18,8 +20,8 @@
               class: "px-4 cursor-pointer hover:bg-neutral-100 flex justify-center items-center"
     %>
   </div>
+
   <div class="divide-y overflow-y-auto">
-    <%= form.hidden_field :kind %>
     <% if flash[:notice].present? %>
       <%= render "components/forms/messages/big", message: flash[:notice], type: :success %>
     <% end %>
@@ -47,6 +49,10 @@
              attr: :description,
              placeholder: "add a simple description"
     %>
+    <% if account.loan? %>
+      <%= render "components/forms/separator" %>
+      <%= render "components/forms/inputs/check_box", form:, attr: :personal_loan %>
+    <% end %>
     <% unless account.external? %>
       <%= render "components/forms/separator" %>
       <%= render "accounts_and_goals/accounts/account/historic_fields", form:, account: %>

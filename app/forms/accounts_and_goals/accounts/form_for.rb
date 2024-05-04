@@ -7,10 +7,11 @@ module AccountsAndGoals
         attributes = {
           "archived" => account.archived_at.present?,
           "at" => account.history&.debits&.first&.issued_at,
-          "amount" => account.history&.debits&.first&.source_amount
+          "amount" => account.history&.debits&.first&.source_amount,
+          "personal_loan" => account.personal_loan?
         }
 
-        form_for(kind: account.kind, account:, attributes:)
+        form_for(kind: account.kind, account:, attributes: attributes.compact)
       end
 
       def self.create(attributes)
