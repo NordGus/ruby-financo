@@ -5,7 +5,6 @@ require_relative "builders/permissions_policy_header"
 module Middleware
   class PermissionsPolicy
     class Policy
-      # TODO: change to actual permissions values
       # List of available permissions can be found at
       # https://github.com/w3c/webappsec-permissions-policy/blob/main/features.md#policy-controlled-features
       DIRECTIVES = {
