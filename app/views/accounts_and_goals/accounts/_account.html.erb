@@ -52,6 +52,14 @@
     <% if account.loan? %>
       <%= render "components/forms/separator" %>
       <%= render "components/forms/inputs/check_box", form:, attr: :personal_loan %>
+      <%= render "components/forms/separator" %>
+      <%=
+        render "components/forms/inputs/number",
+               form:,
+               attr: :capital,
+               error_messages: account.errors.messages_for(:capital)
+      %>
+      <%= render "components/forms/messages/small", message: "a negative value means you are owed" %>
     <% end %>
     <% unless account.external? %>
       <%= render "components/forms/separator" %>
