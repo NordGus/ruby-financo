@@ -30,7 +30,7 @@ module AccountsAndGoals
 
         def initialize_or_find_account!
           if new_record?
-            Account.new(kind: new_capital, currency:, name:, description:, color:, capital:)
+            Account.new(kind:, currency:, name:, description:, color:, capital:)
           else
             Account.includes(:children, history: [:debits]).where(kind:).find(id)
           end
@@ -45,7 +45,7 @@ module AccountsAndGoals
           if new_record?
             account.save!
           else
-            account.update!(kind: new_capital, currency:, name:, description:, color:, capital:)
+            account.update!(kind:, currency:, name:, description:, color:, capital:)
           end
           account
         end
