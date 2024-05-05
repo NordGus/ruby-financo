@@ -51,12 +51,20 @@ module AccountsAndGoals
         id.present?
       end
 
-      def external?
-        Account.external_kinds_array.include?(kind)
+      def capital_account?
+        @capital_account ||= Account.capital_kinds_array.include?(kind)
       end
 
-      def loan?
-        Account.debt_loan_kinds_array.include?(kind)
+      def external_account?
+        @external_account ||= Account.external_kinds_array.include?(kind)
+      end
+
+      def loan_account?
+        @loan_account ||= Account.debt_loan_kinds_array.include?(kind)
+      end
+
+      def credit_line_account?
+        @credit_line_account ||= Account.debt_credit_line_kinds_array.include?(kind)
       end
 
       protected

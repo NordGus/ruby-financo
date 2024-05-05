@@ -25,19 +25,19 @@
     <% if flash[:notice].present? %>
       <%= render "components/forms/messages/big", message: flash[:notice], type: :success %>
     <% end %>
-    
+
     <% flash[:form_persistence_warnings]&.each do |warning| %>
       <%= render "components/forms/messages/big", message: warning, type: :warning %>
     <% end %>
-    
+
     <% account.errors.messages_for(:form_persistence_warnings).each do |warning| %>
       <%= render "components/forms/messages/big", message: warning, type: :warning %>
     <% end %>
-    
+
     <% account.errors.messages_for(:form_persistence_errors).each do |error| %>
       <%= render "components/forms/messages/big", message: error, type: :error %>
     <% end %>
-    
+
     <%=
       render "components/forms/inputs/text",
              form:,
@@ -57,9 +57,11 @@
              attr: :description,
              placeholder: "add a simple description"
     %>
-    <% if account.loan? %>
+    <% if account.loan_account? %>
       <%= render "components/forms/separator" %>
       <%= render "components/forms/inputs/check_box", form:, attr: :personal_loan %>
+    <% end %>
+    <% if account.loan_account? || account.credit_line_account? %>
       <%= render "components/forms/separator" %>
       <%=
         render "components/forms/inputs/number",
@@ -67,9 +69,11 @@
                attr: :capital,
                error_messages: account.errors.messages_for(:capital)
       %>
+    <% end %>
+    <% if account.loan_account? %>
       <%= render "components/forms/messages/small", message: "a negative value means you are owed" %>
     <% end %>
-    <% unless account.external? %>
+    <% unless account.external_account? %>
       <%= render "components/forms/separator" %>
       <%= render "accounts_and_goals/accounts/account/historic_fields", form:, account: %>
     <% end %>
