@@ -25,11 +25,19 @@
     <% if flash[:notice].present? %>
       <%= render "components/forms/messages/big", message: flash[:notice], type: :success %>
     <% end %>
-    <% if account.errors.messages_for(:form_persistence_errors).any? %>
-      <% account.errors.messages_for(:form_persistence_errors).each do |error| %>
-        <%= render "components/forms/messages/big", message: error, type: :error %>
-      <% end %>
+    
+    <% flash[:form_persistence_warnings]&.each do |warning| %>
+      <%= render "components/forms/messages/big", message: warning, type: :warning %>
     <% end %>
+    
+    <% account.errors.messages_for(:form_persistence_warnings).each do |warning| %>
+      <%= render "components/forms/messages/big", message: warning, type: :warning %>
+    <% end %>
+    
+    <% account.errors.messages_for(:form_persistence_errors).each do |error| %>
+      <%= render "components/forms/messages/big", message: error, type: :error %>
+    <% end %>
+    
     <%=
       render "components/forms/inputs/text",
              form:,

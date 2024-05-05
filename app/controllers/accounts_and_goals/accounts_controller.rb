@@ -22,6 +22,8 @@ module AccountsAndGoals
       @form = Accounts::FormFor.create(account_params.to_h.merge("color" => "red.500")) # TODO: implement color picker
 
       if @form.save
+        flash[:form_persistence_warnings] = @form.errors.messages_for(:form_persistence_warnings)
+
         redirect_to accounts_and_goals_account_path(@form), notice: "account saved"
       else
         render :form
@@ -32,6 +34,8 @@ module AccountsAndGoals
       @form = Accounts::FormFor.update(@account, attributes: account_params.to_h)
 
       if @form.save
+        flash[:form_persistence_warnings] = @form.errors.messages_for(:form_persistence_warnings)
+
         redirect_to accounts_and_goals_account_path(@form), notice: "account saved"
       else
         render :form
