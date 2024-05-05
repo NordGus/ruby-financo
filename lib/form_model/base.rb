@@ -9,7 +9,8 @@ module FormModel
     define_model_callbacks :initialize, only: :after
     define_model_callbacks :save, only: :after
 
-    attribute :form_persistence, :boolean, default: false
+    attribute :form_persistence_errors, :boolean, default: false
+    attribute :form_persistence_warnings, :boolean, default: false
 
     def initialize(*)
       run_callbacks(:initialize) { super(*) }
@@ -24,7 +25,7 @@ module FormModel
         rescue StandardError => e
           Rails.logger.error "failed to save #{self.class}:\n\t#{e.message}\n\t\t#{e.backtrace&.join("\n\t\t")}\n"
           errors.add(
-            :form_persistence,
+            :form_persistence_errors,
             :failed_to_persist,
             message: "something when wrong while saving #{model_name.element}"
           )
