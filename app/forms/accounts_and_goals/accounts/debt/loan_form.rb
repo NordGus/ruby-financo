@@ -13,10 +13,10 @@ module AccountsAndGoals
           super do
             set_new_kind
             set_new_capital
-            account = find_or_initialize_account!
+            account = initialize_or_find_account!
             account = memoize_previous_capital(account)
             account = memoize_previous_kind(account)
-            account = update_or_create_account!(account)
+            account = create_or_update_account(account)
             account = create_or_update_history!(account)
             account = archive_account!(account)
             add_kind_changed_warning
@@ -35,7 +35,7 @@ module AccountsAndGoals
           self.new_capital = capital
         end
 
-        def find_or_initialize_account!
+        def initialize_or_find_account!
           if new_record?
             Account.new(kind: new_kind, currency:, name:, description:, color:, capital:)
           else
@@ -53,11 +53,11 @@ module AccountsAndGoals
           account
         end
 
-        def update_or_create_account!(account)
+        def create_or_update_account(account)
           if new_record?
             account.save!
           else
-            account.update!(kind: new_kind, currency:, name:, description:, capital:)
+            account.update!(kind: new_kind, currency:, name:, description:, color:, capital:)
           end
           account
         end

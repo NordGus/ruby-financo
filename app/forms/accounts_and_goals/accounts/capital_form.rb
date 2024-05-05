@@ -5,8 +5,8 @@ module AccountsAndGoals
     class CapitalForm < AccountForm
       def save
         super do
-          account = find_or_initialize_account!
-          account = update_or_create_account!(account)
+          account = initialize_or_find_account!
+          account = create_or_update_account(account)
           account = create_or_update_history!(account)
           account = archive_account!(account)
           update_id(account)
@@ -15,7 +15,7 @@ module AccountsAndGoals
 
       private
 
-      def find_or_initialize_account!
+      def initialize_or_find_account!
         if new_record?
           Account.new(kind:, currency:, name:, description:, color:, capital: 0)
         else
@@ -23,7 +23,7 @@ module AccountsAndGoals
         end
       end
 
-      def update_or_create_account!(account)
+      def create_or_update_account(account)
         new_record? ? account.save! : account.update!(kind:, currency:, name:, description:, color:)
         account
       end
