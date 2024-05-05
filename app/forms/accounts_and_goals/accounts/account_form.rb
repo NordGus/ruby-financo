@@ -2,6 +2,7 @@
 
 module AccountsAndGoals
   module Accounts
+    # rubocop:disable Metrics/ClassLength
     class AccountForm < FormModel::Base
       # Account attributes
       attribute :id, :string
@@ -139,5 +140,6 @@ module AccountsAndGoals
         account
       end
     end
+    # rubocop:enable Metrics/ClassLength
   end
 end
