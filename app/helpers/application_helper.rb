@@ -7,6 +7,8 @@ module ApplicationHelper
       "text-red-700 bg-red-100"
     when :success
       "text-green-700 bg-green-100"
+    when :warning
+      "text-yellow-700 bg-yellow-100"
     else
       "text-neutral-700 bg-neutral-100"
     end
