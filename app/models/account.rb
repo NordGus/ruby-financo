@@ -85,7 +85,7 @@ class Account < ApplicationRecord
 
   scope :parents, -> { where(parent_id: nil) }
   scope :visible, -> { where(kind: visible_kinds_array) }
-  scope :for_listing, -> { order("archived_at DESC NULLS FIRST") }
+  scope :for_listing, -> { order("archived_at DESC NULLS FIRST").order(created_at: :desc) }
 
   def debt?
     KINDS[:debt].values.flatten.compact.include?(kind)

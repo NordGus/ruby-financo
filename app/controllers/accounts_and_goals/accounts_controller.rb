@@ -7,7 +7,7 @@ module AccountsAndGoals
     before_action :set_account, only: %i[show update destroy]
 
     def index
-      @accounts = Account.includes(:credits, :debits).for_listing.parents.where(kind: @kinds).order(created_at: :desc)
+      @accounts = Account.includes(:credits, :debits).for_listing.parents.where(kind: @kinds)
     end
 
     def show
@@ -61,7 +61,7 @@ module AccountsAndGoals
     end
 
     def set_account
-      @account = Account.includes(:children, :debits, :credits, history: [:debits]).find(params[:id])
+      @account = Account.includes(:children, :debits, :credits, history: [:debits]).visible.find(params[:id])
     end
 
     def account_params
