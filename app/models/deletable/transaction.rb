@@ -6,8 +6,8 @@ module Deletable
 
     self.table_name = ::Transaction.table_name
 
-    belongs_to :source, class_name: "Deletable::Account", foreign_key: "source_id", inverse_of: :debits
-    belongs_to :target, class_name: "Deletable::Account", foreign_key: "target_id", inverse_of: :credits
+    belongs_to :source, class_name: "Deletable::Account", foreign_key: "source_id"
+    belongs_to :target, class_name: "Deletable::Account", foreign_key: "target_id"
 
     def restore
       transaction do

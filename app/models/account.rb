@@ -61,21 +61,23 @@ class Account < ApplicationRecord
   HISTORY_ACCOUNT_COLOR = "slate.300"
 
   belongs_to :parent, class_name: "Account", foreign_key: "parent_id", optional: true
+
   has_many :children, class_name: "Account", foreign_key: "parent_id", dependent: :destroy
   has_one :history, -> { where(kind: history_kind) }, class_name: "Account", foreign_key: "parent_id"
 
   has_many :debits,
            -> { order(issued_at: :desc) },
            class_name: "Transaction",
-           foreign_key: "source_id",
            dependent: :destroy,
            inverse_of: :source
   has_many :credits,
            -> { order("executed_at DESC NULLS FIRST") },
            class_name: "Transaction",
-           foreign_key: "target_id",
-           dependent: :destroy,
-           inverse_of: :target
+           inverse_of: :target,
+           dependent: :destroy
+  has_many :transactions,
+           ->(account) { unscope(:where).where(source_id: account.id).or(where(target_id: account.id)) },
+           class_name: "Transaction"
 
   validates :parent_id, comparison: { other_than: :id }, if: -> { parent_id.present? }
   validates :kind, presence: true, inclusion: { in: KINDS.values.map(&:values).flatten.compact }
