@@ -15,6 +15,8 @@ class Transaction < ApplicationRecord
             comparison: { greater_than_or_equal_to: :issued_at },
             if: -> { executed_at.present? }
 
+  # TODO: add a prevention to negative amounts
+
   private
 
   def amounts_negativity_or_positivity_match
