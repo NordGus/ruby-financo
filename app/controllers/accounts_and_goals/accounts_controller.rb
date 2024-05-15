@@ -67,7 +67,7 @@ module AccountsAndGoals
     def account_params
       params.require(:account).permit(
         :parent_id, :kind, :currency, :name, :description, :color, :capital, :amount, :at, :archived,
-        :clear_history, :personal_loan
+        :clear_history, :personal_loan, children_attributes: %i[id name description archived_at archived]
       )
     end
 
