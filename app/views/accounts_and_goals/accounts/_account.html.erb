@@ -3,8 +3,6 @@
                class: modal_parent_element_classes,
                data: { controller: "deletable" }
              } do |form| %>
-  <%= form.hidden_field :kind %>
-
   <div class="flex justify-between divide-x items-stretch h-14 border-b">
     <span class="px-4 flex justify-center items-center">
         <%= t("accounts_and_goals.ui.accounts.kind.#{form.object.kind}") %>
@@ -22,6 +20,8 @@
   </div>
 
   <div class="divide-y overflow-y-auto">
+    <%= form.hidden_field :kind, hidden: true %>
+
     <% if flash[:notice].present? %>
       <%= render "components/forms/messages/big", message: flash[:notice], type: :success %>
     <% end %>
