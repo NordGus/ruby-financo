@@ -15,7 +15,7 @@ class Transaction < ApplicationRecord
             comparison: { greater_than_or_equal_to: :issued_at },
             if: -> { executed_at.present? }
 
-  # TODO: add a prevention to negative amounts
+  before_save :invert_negative_amounts_directions
 
   private
 
@@ -24,5 +24,16 @@ class Transaction < ApplicationRecord
 
     errors.add(:source_amount, :amount_mismatch, message: "positivity/negativity mismatch")
     errors.add(:target_amount, :amount_mismatch, message: "positivity/negativity mismatch")
+  end
+
+  def invert_negative_amounts_directions
+    return if source_amount.positive? || source_amount.zero?
+
+    source = { amount: source_amount.abs, id: source_id }
+
+    self.source_amount = target_amount.abs
+    self.source_id = target_id
+    self.target_id = source[:id]
+    self.target_amount = source[:amount]
   end
 end
