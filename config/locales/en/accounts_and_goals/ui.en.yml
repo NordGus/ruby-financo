@@ -4,6 +4,7 @@ en:
       accounts:
         historic_data_header: initial balance (for accounts with incomplete history)
         deletion_message: do you want to delete this account?
+        children_header: sub-accounts
         kind:
           capital:
             normal: bank accounts

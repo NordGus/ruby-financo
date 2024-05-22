@@ -77,6 +77,32 @@
       <%= render "components/forms/separator" %>
       <%= render "accounts_and_goals/accounts/account/historic_fields", form:, account: %>
     <% end %>
+    <% if account.external_account? %>
+      <%= render "components/forms/separator" %>
+      <%=
+        render "components/forms/section_header",
+               text: t("accounts_and_goals.ui.accounts.children_header")
+      %>
+      <%= form.fields_for :children do |child_form| %>
+        <% unless child_form.options[:child_index].zero? %>
+          <%= render "components/forms/separator" %>
+        <% end %>
+        <%= child_form.hidden_field :id, hidden: true %>
+        <%=
+          render "components/forms/inputs/text",
+                 form: child_form,
+                 attr: :name,
+                 autofocus: true,
+                 error_messages: child_form.object.errors.messages_for(:name)
+        %>
+        <%=
+          render "components/forms/inputs/textarea",
+                 form: child_form,
+                 attr: :description,
+                 placeholder: "add a simple description"
+        %>
+      <% end %>
+    <% end %>
     <% unless account.new_record? %>
       <%= render "components/forms/separator" %>
       <%= render "accounts_and_goals/accounts/account/archive_and_deletion", form:, account: %>
