@@ -3,7 +3,7 @@
                class: modal_parent_element_classes,
                data: { controller: "deletable" }
              } do |form| %>
-  <div class="flex justify-between divide-x items-stretch h-14 border-b">
+  <div class="flex justify-between divide-x items-stretch h-12 border-b">
     <span class="px-4 flex justify-center items-center">
         <%= t("accounts_and_goals.ui.accounts.kind.#{form.object.kind}") %>
       </span>
@@ -79,10 +79,16 @@
     <% end %>
     <% if account.external_account? %>
       <%= render "components/forms/separator" %>
-      <%=
-        render "components/forms/section_header",
-               text: t("accounts_and_goals.ui.accounts.children_header")
-      %>
+      <div class="flex justify-between divide-x items-stretch h-16">
+        <h4 class="px-4 text-lg flex items-center flex-grow">
+          <%= t("accounts_and_goals.ui.accounts.children_header") %>
+        </h4>
+        <%=
+          link_to t("ui.buttons.new"),
+                  accounts_and_goals_path,
+                  class: "px-4 cursor-pointer hover:bg-neutral-100 flex justify-center items-center min-w-24"
+        %>
+      </div>
       <div id="account_children" class="divide-y">
         <%= form.fields_for :children do |child_form| %>
           <% unless child_form.options[:child_index].zero? %>
