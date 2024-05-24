@@ -6,7 +6,7 @@ module AccountsAndGoals
       def save
         super do
           account = initialize_or_find_account!
-          account = create_or_update_account(account)
+          account = create_or_update_account!(account)
           account = create_or_update_history!(account)
           account = archive_account!(account)
           update_id(account)
@@ -23,7 +23,7 @@ module AccountsAndGoals
         end
       end
 
-      def create_or_update_account(account)
+      def create_or_update_account!(account)
         new_record? ? account.save! : account.update!(kind:, currency:, name:, description:, color:)
         account
       end
