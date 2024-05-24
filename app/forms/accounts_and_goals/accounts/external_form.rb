@@ -31,6 +31,14 @@ module AccountsAndGoals
         validates :name,
                   presence: true,
                   length: { minimum: Account::NAME_MIN_LENGTH, maximum: Account::NAME_MAX_LENGTH }
+
+        def persisted?
+          id.present?
+        end
+
+        def new_record?
+          !persisted?
+        end
       end
     end
   end
